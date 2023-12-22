@@ -1,7 +1,7 @@
 # ACMGA
 
 ACMGA is a reference-free Multiple-genome alignment pipeline. A simplified schema of the pipeline is shown below.
-![ACMGA](https://github.com/790634750/ACMGA/tree/master/workflow/schematic.jpg)
+![ACMGA](https://github.com/790634750/ACMGA/tree/master/workflow/image/schematic.jpg)
 
 
 
