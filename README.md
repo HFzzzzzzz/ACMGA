@@ -52,15 +52,19 @@ To test the pipeline before running on your own data, you can align some Arabido
 ```
 git clone https://github.com/HFzzzzzzz/ACMGA.git
 conda activate testPipeline
-#1、Prepare data
+```
+## 1、Prepare data
+```
 cd ACMGA/data
 sh download.sh
 cd ..
-#2、Generate command.sh script
-snakemake  -j 5 --configfile config/config.yaml   --use-singularity  --singularity-args "-B  $(pwd)/data" 
-#3、Run command.sh
-docker login
+```
+## 2、Generate `command.sh`
+`snakemake  -j 5 --configfile config/config.yaml   --use-singularity  --singularity-args "-B  $(pwd)/data" `
+## 3、Run `command.sh`
+```
 cd data
+docker login
 docker run -v $(pwd):/data --rm -it mgatools/acmga:1.0
 sh command.sh
 ```
