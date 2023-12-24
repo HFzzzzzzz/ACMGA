@@ -54,11 +54,11 @@ To test the pipeline before running on your own data, you can align some Arabido
 git clone https://github.com/790634750/ACMGA.git
 conda activate testPipeline
 cd ACMGA/data
-sh test.sh
+sh download.sh
 snakemake  -j 5 --configfile config/config.yaml   --use-singularity  --singularity-args "-B  $(pwd)/data" 
 docker login
 docker run -v $(pwd):/data --rm -it mgatools/acmga:1.0
-sh result.sh
+sh command.sh
 ```
 # Software requirements
 Snakemake is required to run this pipeline and we recommend snakemake version 6.0.0 or higher. The recommended installation is shown below. For more details see  [snakemake installation guide](https://snakemake.readthedocs.io/en/stable/getting_started/installation.html).
