@@ -55,8 +55,10 @@ git clone https://github.com/790634750/ACMGA.git
 conda activate testPipeline
 cd ACMGA/data
 sh download.sh
+cd ..
 snakemake  -j 5 --configfile config/config.yaml   --use-singularity  --singularity-args "-B  $(pwd)/data" 
 docker login
+cd data
 docker run -v $(pwd):/data --rm -it mgatools/acmga:1.0
 sh command.sh
 ```
