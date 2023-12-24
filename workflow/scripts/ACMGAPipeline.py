@@ -37,9 +37,8 @@ fastaVariety=[]
 ancestor=[]
 replacenamea=""
 replacenameb=""
-
+Cactus_threads=""
 i=0
-
 def make_paf_alignments(event_tree_string, event_names_to_sequences, ancestor_event_string, params):
     global event_tree_str,i,ancestorevent
     event_tree_str=event_tree_string
@@ -289,6 +288,7 @@ def make_ingroup_to_outgroup_alignments_2( alignments, ingroup_event, outgroup_e
     make_ingroup_to_outgroup_alignments_1(ingroup_event, outgroup_events,event_names_to_sequences, distances, params)
 
 def cactus_cons_with_resources(spanning_tree, event, config_node, subtree_eventmap,og_map):
+    resultPath = "result/"
     tmpdict={}
     for event, seq_id in subtree_eventmap.items():
         if(event in sanitized):
@@ -299,15 +299,15 @@ def cactus_cons_with_resources(spanning_tree, event, config_node, subtree_eventm
     print("grep -v tp:A:S "+PATH+'subtree'+str(i)+"/anchorwave_tile.paf"+ " > "+ PATH + str(ancestorevent) + "_primary.paf || true")
     print("grep  tp:A:S "  +PATH+'subtree'+str(i)+"/anchorwave_tile.paf"+ "> " + PATH  +str(ancestorevent) + "_secondary.paf || true")
     if(outgroups==[]):
-        print("cactus_consolidated --sequences " +"\" "+" ".join([item for tmpdict in pairs for item in tmpdict])+ " \" "+" --speciesTree " +" \" "+ event_tree_str+ "\""+" --logLevel DEBUG --alignments  " + PATH + str(ancestorevent) + "_primary.paf "+ "  --params  "+ xmlPath+ " --outputFile " +PATH+ ancestorevent + ".c2h " + " --outputHalFastaFile " +PATH+ ancestorevent + ".c2h.fa"+ " --outputReferenceFile " +PATH+ ancestorevent+ ".ref"+" ".join(outgroups)+ " --referenceEvent " + ancestorevent+ " --threads 36"+ " --secondaryAlignments " +PATH + str(ancestorevent) + "_secondary.paf")
+        print("cactus_consolidated --sequences " +"\" "+" ".join([item for tmpdict in pairs for item in tmpdict])+ " \" "+" --speciesTree " +" \" "+ event_tree_str+ "\""+" --logLevel DEBUG --alignments  " + PATH + str(ancestorevent) + "_primary.paf "+ "  --params  "+ xmlPath+ " --outputFile " +PATH+ ancestorevent + ".c2h " + " --outputHalFastaFile " +PATH+ ancestorevent + ".c2h.fa"+ " --outputReferenceFile " +PATH+ ancestorevent+ ".ref"+" ".join(outgroups)+ " --referenceEvent " + ancestorevent+" "+Cactus_threads+ " --secondaryAlignments " +PATH + str(ancestorevent) + "_secondary.paf")
     else:
-        print("cactus_consolidated --sequences " +"\" "+" ".join([item for tmpdict in pairs for item in tmpdict])+ " \" "+" --speciesTree " +" \" "+ event_tree_str+ "\""+" --logLevel DEBUG --alignments  " + PATH + str(ancestorevent) + "_primary.paf "+ "  --params  "+ xmlPath+ " --outputFile " +PATH+ ancestorevent + ".c2h " + " --outputHalFastaFile " +PATH+ ancestorevent + ".c2h.fa"+ " --outputReferenceFile " +PATH+ ancestorevent+ ".ref" + " --outgroupEvents " +" ".join(outgroups)+ " --referenceEvent " + ancestorevent+ " --threads 36"+ " --secondaryAlignments " +PATH + str(ancestorevent) + "_secondary.paf")
+        print("cactus_consolidated --sequences " +"\" "+" ".join([item for tmpdict in pairs for item in tmpdict])+ " \" "+" --speciesTree " +" \" "+ event_tree_str+ "\""+" --logLevel DEBUG --alignments  " + PATH + str(ancestorevent) + "_primary.paf "+ "  --params  "+ xmlPath+ " --outputFile " +PATH+ ancestorevent + ".c2h " + " --outputHalFastaFile " +PATH+ ancestorevent + ".c2h.fa"+ " --outputReferenceFile " +PATH+ ancestorevent+ ".ref" + " --outgroupEvents " +" ".join(outgroups)+ " --referenceEvent " + ancestorevent+ " "+Cactus_threads+ " --secondaryAlignments " +PATH + str(ancestorevent) + "_secondary.paf")
     pattern=f"\(([^(]*){ancestorevent}"
     haltree=re.search(pattern,event_tree_str)
     if(outgroups==[]):
-        hal[ancestorevent]="halAppendCactusSubtree "+PATH+ancestorevent+".c2h"+"  "+PATH+ancestorevent+".c2h.fa"+" "+" \""+haltree.group(0)+ ";"+"\" "+"  "+" "+PATH+"ancestor.hal"
+        hal[ancestorevent]="halAppendCactusSubtree "+PATH+ancestorevent+".c2h"+"  "+PATH+ancestorevent+".c2h.fa"+" "+" \""+haltree.group(0)+ ";"+"\" "+"  "+" "+resultPath+"evolverPlants.hal"
     else:
-        hal[ancestorevent]="halAppendCactusSubtree "+PATH+ancestorevent+".c2h"+"  "+PATH+ancestorevent+".c2h.fa"+" "+" \""+haltree.group(0)+ ";"+"\" "+"  "+" "+PATH+"ancestor.hal"+" --outgroups "+",".join(outgroups)
+        hal[ancestorevent]="halAppendCactusSubtree "+PATH+ancestorevent+".c2h"+"  "+PATH+ancestorevent+".c2h.fa"+" "+" \""+haltree.group(0)+ ";"+"\" "+"  "+" "+resultPath+"evolverPlants.hal"+" --outgroups "+",".join(outgroups)
     treemap[ancestorevent]=event_tree_str
     outgroupsmap[ancestorevent]=' '.join(outgroups)
 
@@ -344,7 +344,7 @@ def halAppendCactusSubtree():
 def progressive_step_2(config_node, subtree_eventmap,spanning_tree, og_map, event):
         cactus_cons_with_resources(spanning_tree, event, config_node, subtree_eventmap,og_map)
 
-def main(xml,evolverMammals,snakemakePath,snakemakeFasta,snakemakeGff,uniqueCds,sVariety,sminimap2ForGff,sminimap2Paramters,sproaliParamters,sgenoaliParamters):
+def main(xml,evolverMammals,snakemakePath,snakemakeFasta,snakemakeGff,uniqueCds,sVariety,sminimap2ForGff,sminimap2Paramters,sproaliParamters,sgenoaliParamters,scactus_threads):
     global xmlPath
     global PATH
     global fasta
@@ -357,6 +357,7 @@ def main(xml,evolverMammals,snakemakePath,snakemakeFasta,snakemakeGff,uniqueCds,
     global proaliParamters
     global genoaliParamters
     global input_seq_map
+    global Cactus_threads
     xmlPath="/"+xml
     PATH=snakemakePath
     uniquePath="/"+uniqueCds
@@ -368,7 +369,7 @@ def main(xml,evolverMammals,snakemakePath,snakemakeFasta,snakemakeGff,uniqueCds,
     minimap2Paramters=sminimap2Paramters
     proaliParamters=sproaliParamters
     genoaliParamters=sgenoaliParamters
-
+    Cactus_threads=scactus_threads
     config_node = ET.parse(xml).getroot()
     config_wrapper = ConfigWrapper(config_node)
     config_wrapper.substituteAllPredefinedConstantsWithLiterals()
@@ -412,14 +413,11 @@ def main(xml,evolverMammals,snakemakePath,snakemakeFasta,snakemakeGff,uniqueCds,
     assert len(dep_table) > 0
 
     # make the jobs.  jobs must be made after their dependencies.  we just brute force it
-    # todo: can speed up with better indexing/updating
     job_table = {}
     fasta_results = input_seq_map
-    hal_results = {}
 
 
     while len(job_table) != len(dep_table):
-        num_jobs_at_iteration_start = len(job_table)
         events = [k for k in dep_table.keys()]
         for event in events:
             if event in job_table:
@@ -447,4 +445,4 @@ def main(xml,evolverMammals,snakemakePath,snakemakeFasta,snakemakeGff,uniqueCds,
 
 if __name__ == '__main__':
 
-    main(sys.argv[1],sys.argv[2],sys.argv[3],sys.argv[4],sys.argv[5],sys.argv[6],sys.argv[7],sys.argv[8],sys.argv[9],sys.argv[10],sys.argv[11])
+    main(sys.argv[1],sys.argv[2],sys.argv[3],sys.argv[4],sys.argv[5],sys.argv[6],sys.argv[7],sys.argv[8],sys.argv[9],sys.argv[10],sys.argv[11],sys.argv[12])

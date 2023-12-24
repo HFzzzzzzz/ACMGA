@@ -1,3 +1,13 @@
+##############################################
+# Example config for ACMGA pipeline Snakefile  #
+##############################################
+
+########################
+# REQUIRED PARAMETERS  #
+########################
+
+
+#Collection of input fasta file names.
 fasta:
   ['Sha.chr.all.v2.0.fasta',
    'Kyo.chr.all.v2.0.fasta',
@@ -9,6 +19,7 @@ fasta:
    'Ler.chr.all.v2.0.fasta'
   ]
 
+#Collection of gff file names corresponding to input fasta files and the gff file name for the ancestral sequence ( with the .gff suffix).
 gff:
   ['Cvi.protein-coding.genes.v2.5.2019-10-09.gff3',
    'Eri.protein-coding.genes.v2.5.2019-10-09.gff3',
@@ -25,12 +36,10 @@ gff:
    'N4.gff',
    'N5.gff',
    'N6.gff',
-
-
-
   ]
 
-
+# fsata and gff species name
+# The species names should each match a fasta file and gff file in "ACMGA/data"
 species:
   [
        'Cvi',
@@ -42,30 +51,47 @@ species:
        'Ler',
        'Arabidopsis_thaliana',
   ]
+
+#In the guide tree (Ler.protein:0.00493038,(Cvi.protein:0.0145906,(Arabidopsis_thaliana.protein:0.0117518,An-1.protein:0.00833626)N2:0.0070939)N1:0.00493038)N0;,
+#the names of ancestral nodes are:'N0','N1','N2'
 ancestor:
   [
      'N0',
      'N1',
      'N2',
-     'N3',
-     'N4',
-     'N5',
-     'N6',
  ]
-
+#The paths where the GFF file, FASTA file are located.
 PATH:
-    '/data/SlurmArabidopsis/'
+    '/data/Arabidopsis/'
+#The path of guide tree
+Tree:
+    'data/evolverPlant.txt'
+#The path of collection of CDS files
+uniqueCds:
+    'data/Arabidopsis/unique.fa'
+
+
+#The XML file required for the ACMGA to run.
 XML:
     'data/cactus_progressive_config.xml'
-Tree:
-    'data/SlurmArabidopsis/examples.txt'
-uniqueCds:
-    'data/SlurmArabidopsis/unique.fa'
+
+
+
+#The default parameters of minimap in ACMGA, it is recommended to use the default parameters.
 minimap2ForGff:
   " -x splice -t 10 -k 12 -a -p 0.4 -N 20 "
 minimap2Paramters:
   " -x splice -t 35 -k 12 -a -p 0.4 -N 20 "
+
+#The configuration parameters for the proali command in AnchorWave, where -t specifies the number of threads.
+
 proaliParamters:
   " -Q 1 -R 1 -t 10  "
+
+#The configuration parameters for the genoali command in AnchorWave, where -t specifies the number of threads.
 genoaliParamters:
   " -t 5 -IV "
+
+#The number of threads used to run the cactus part
+cactus_threads:
+  "--t 36"
