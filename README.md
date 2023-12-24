@@ -41,7 +41,7 @@ The second step is to enter the docker environment and run the script
 ```
 cd ACMGA/data
 docker run -v $(pwd):/data --rm -it mgatools/acmga:1.0
-sh result.sh
+sh command.sh
 ```
 
 Use docker image from  [the latest release](https://hub.docker.com/repository/docker/mgatools/acmga/general) 
@@ -73,7 +73,7 @@ Note that the installation should use the exact commands above, including the ex
 
 To run the pipeline using a prebuilt singularity container, you must have singularity installed on your system. Singularity is installed on many HPC systems and can be used without root privileges. However, note that installation of singularity does require root privileges. If you want to install singularity and have these privileges, you can find up-to-date instructions on how to do so in the official  [singularity installation guide](https://github.com/sylabs/singularity/blob/master/INSTALL.md).
 # Explanation of output files
-The intermediate results of ACMGA are written to the data directory or subdirectories with outputs from different steps of the pipeline. The final output that multiple genome alignment result  as `ancestor.hal`
+The intermediate results of ACMGA are written to the data directory or subdirectories with outputs from different steps of the pipeline. The final output that multiple genome alignment result  as `result/evolverPlants.hal`
 
 # Troubleshooting
 
