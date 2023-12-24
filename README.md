@@ -2,8 +2,7 @@
 # ACMGA
 
 ACMGA is a reference-free Multiple-genome alignment pipeline. A simplified schema of the pipeline is shown below.
-![ACMGA](https://github.com/790634750/ACMGA/raw/master/workflow/image/schematic.jpg)
-
+![ACMGA](https://github.com/HFzzzzzzz/ACMGA/raw/master/workflow/image/schematic.jpg)
 
 
 
@@ -41,7 +40,7 @@ The second step is to enter the docker environment and run the script
 ```
 cd ACMGA/data
 docker run -v $(pwd):/data --rm -it mgatools/acmga:1.0
-sh result.sh
+sh command.sh
 ```
 
 Use docker image from  [the latest release](https://hub.docker.com/repository/docker/mgatools/acmga/general) 
@@ -51,12 +50,17 @@ Assume that you already have a conda environment named **testPipeline** with pyt
 
 To test the pipeline before running on your own data, you can align some Arabidopsis sequences. 
 ```
-git clone https://github.com/790634750/ACMGA.git
+git clone https://github.com/HFzzzzzzz/ACMGA.git
 conda activate testPipeline
+#1、Prepare data
 cd ACMGA/data
 sh download.sh
+cd ..
+#2、Generate command.sh script
 snakemake  -j 5 --configfile config/config.yaml   --use-singularity  --singularity-args "-B  $(pwd)/data" 
+#3、Run command.sh
 docker login
+cd data
 docker run -v $(pwd):/data --rm -it mgatools/acmga:1.0
 sh command.sh
 ```
@@ -73,7 +77,7 @@ Note that the installation should use the exact commands above, including the ex
 
 To run the pipeline using a prebuilt singularity container, you must have singularity installed on your system. Singularity is installed on many HPC systems and can be used without root privileges. However, note that installation of singularity does require root privileges. If you want to install singularity and have these privileges, you can find up-to-date instructions on how to do so in the official  [singularity installation guide](https://github.com/sylabs/singularity/blob/master/INSTALL.md).
 # Explanation of output files
-The intermediate results of ACMGA are written to the data directory or subdirectories with outputs from different steps of the pipeline. The final output that multiple genome alignment result  as `ancestor.hal`
+The intermediate results of ACMGA are written to the data directory or subdirectories with outputs from different steps of the pipeline. The final output that multiple genome alignment result  as `result/evolverPlants.hal`
 
 # Troubleshooting
 
