@@ -43,7 +43,7 @@ def make_paf_alignments(event_tree_string, event_names_to_sequences, ancestor_ev
     global event_tree_str,i,ancestorevent
     event_tree_str=event_tree_string
     i = i + 1
-    print("mkdir" +PATH+"subtree"+str(i))
+    print("mkdir " +PATH+"subtree"+str(i))
     event_tree = newickTreeParser(event_tree_string)
     ancestor_event = get_node(event_tree, ancestor_event_string)
     ancestorevent = ancestor_event.iD
