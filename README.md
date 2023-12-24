@@ -2,8 +2,7 @@
 # ACMGA
 
 ACMGA is a reference-free Multiple-genome alignment pipeline. A simplified schema of the pipeline is shown below.
-![ACMGA](https://github.com/790634750/ACMGA/raw/master/workflow/image/schematic.jpg)
-
+![ACMGA](https://github.com/HFzzzzzzz/ACMGA/raw/master/workflow/image/schematic.jpg)
 
 
 
@@ -51,7 +50,7 @@ Assume that you already have a conda environment named **testPipeline** with pyt
 
 To test the pipeline before running on your own data, you can align some Arabidopsis sequences. 
 ```
-git clone https://github.com/790634750/ACMGA.git
+git clone https://github.com/HFzzzzzzz/ACMGA.git
 conda activate testPipeline
 cd ACMGA/data
 sh download.sh
