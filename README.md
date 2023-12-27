@@ -12,7 +12,7 @@ ACMGA is a reference-free Multiple-genome alignment pipeline. A simplified schem
 # Build environment
 ACMGA requires Python = 3.10 along with Biopython libraries. If you don't have biopython, you need to install it
 ```
-pip install bioython
+pip install biopython
 ```
 ## ACMGA supports building a local environment and using docker image
 ### Building a local environment
