@@ -1,4 +1,5 @@
 
+
 # ACMGA
 
 ACMGA is a reference-free Multiple-genome alignment pipeline. A simplified schema of the pipeline is shown below.
@@ -13,7 +14,26 @@ ACMGA requires Python = 3.10 along with Biopython libraries. If you don't have b
 ```
 pip install bioython
 ```
-The use of ACMGA currently requires the support of snakemake (>6.0.0), docker and singularity. Please ensure that they have been installed before running ACMGA.
+## ACMGA supports building a local environment and using docker image. 
+### Building a local environment
+- python3.10
+- Snakemake(>6.0)
+- AnchorWave
+- Cactus
+- SAMtools
+- Minimap2
+- bedtools
+- bedToGenePred
+- genePredToGtf
+- gffread
+- k8
+- last
+- 
+Using this approach, you need to make slight modifications to some of the paths within `command.sh`
+### Using Docker image
+The use of ACMGA currently requires the support of snakemake (>6.0.0), docker and singularity. Please ensure that they have been installed before running ACMGA. We recommend that you use this approach.
+
+
 
 # Quickstart
 For a quickstart with your own data, you can follow the instructions below. We recommend testing the pipeline with our test data first (see section  **Testing the pipeline**), to ensure the pipeline will work correctly.
@@ -21,32 +41,43 @@ For a quickstart with your own data, you can follow the instructions below. We r
 To get started, clone this repository.
 
 You can now prepare the run with the pipeline by doing the following:
-1.  Place your FASTA sequences and gff file suffixed with  `.gff` and a  guide tree  into  `ACMGA/data`
-2.  Place the CDS sequences set from all the input genomes into `ACMGA/data`
-3.  Copy  `ACMGA/config/config.yaml`  to, for example,  `ACMGA/config/myconfig.yaml`  and edit the new config file to include your FASTA sequences (parameter  `fasta:`) and gff  (parameter  `gff:`). The Fasta and gff  must match filenames in  `ACMGA/data`.
+ 1.  Place your FASTA sequences and gff file suffixed with  `.gff` and a  guide tree  into  `ACMGA/data`
+ 2.  Place the CDS sequences set from all the input genomes into `ACMGA/data`
+ 3. For example
+ 
+	 3.1 Copy  `ACMGA/config/config.yaml` to `ACMGA/config/myconfig.yaml` 
+	 
+	 3.2 Edit the `ACMGA/config/myconfig.yaml` to include :
+	 
+	-  input FASTA sequences name ( parameter  `fasta:` )
+	-  input GFF name and ancestor GFF name ( parameter  `gff:` )
+	-  path for the collection of CDS ( parameter `nonDuplicateCDS:` )
+	-  path of FASTA, GFF file (parameter  `path:` )
+	-  species name ( parameter  `species:` )
+	- ancestor name ( parameter `ancestor:` )
+	- path of guide tree ( parameter `Tree:` )
 
 
 
 The pipeline can then be executed from the  `/ACMGA`  directory in two steps as shown below. 
 ```
 cd ACMGA
-snakemake  -j 5 --configfile config/config.yaml   --use-singularity  --singularity-args "-B $(pwd)/data"
+snakemake  -j 5 --configfile config/myconfig.yaml   --use-singularity  --singularity-args "-B $(pwd)"
 ```
-First step will generate the result.sh script in the data file.
+First step will generate the `command.sh` script in the dat file.
 
 
 The second step is to enter the docker environment and run the script
 
 ```
-cd ACMGA/data
+docker login
 docker run -v $(pwd):/data --rm -it mgatools/acmga:1.0
 sh command.sh
 ```
-
 Use docker image from  [the latest release](https://hub.docker.com/repository/docker/mgatools/acmga/general) 
 # Testing the pipeline
 
-Assume that you already have a conda environment named **testPipeline** with python 3.10. Snakemake has been successfully installed in this environment. Docker and Singularity have been installed successfully.
+Assume that you already have a conda environment named **testPipeline** with python 3.10, Snakemake has been successfully installed in this environment. Docker and Singularity have been installed successfully.
 
 To test the pipeline before running on your own data, you can align some Arabidopsis sequences. 
 ```
@@ -60,7 +91,9 @@ sh download.sh
 cd ..
 ```
 ## 2、Generate `command.sh`
-`snakemake  -j 5 --configfile config/config.yaml   --use-singularity  --singularity-args "-B  $(pwd)/data" `
+```
+snakemake  -j 5 --configfile config/config.yaml   --use-singularity  --singularity-args "-B  $(pwd)`
+```
 ## 3、Run `command.sh`
 ```
 cd data
