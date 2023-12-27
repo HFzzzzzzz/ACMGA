@@ -135,7 +135,7 @@ OrthoFinder/orthofinder -f OrthoFinder/ExampleData
 The intermediate results of ACMGA are written to the `data` directory or subdirectories with outputs from different steps of the pipeline. The final output that multiple genome alignment result  as `result/evolverPlants.hal`
 
 # HAL calling vairants 
-You can refer to this [document](https://github.com/HFzzzzzzz/ACMGA/blob/master/result/README.md) for calling SNPs and INDELs in the hal file. Additionally, you have the flexibility to perform further analysis using alternative methods. The Cactus software provides support for various extensions.
+You can refer to this [document](https://github.com/HFzzzzzzz/ACMGA/blob/master/result/README.md) for calling SNPs and INDELs in the HAL file. Additionally, you have the flexibility to perform further analysis using alternative methods. The Cactus software provides support for various extensions.
 
 # Troubleshooting
 
