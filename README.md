@@ -96,7 +96,6 @@ snakemake  -j 5 --configfile config/config.yaml   --use-singularity  --singulari
 ```
 ## 3、Run `command.sh`
 ```
-cd data
 docker login
 docker run -v $(pwd):/data --rm -it mgatools/acmga:1.0
 sh command.sh
