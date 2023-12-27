@@ -59,7 +59,7 @@ You can now prepare the run with the pipeline by doing the following:
 
 
 
-The pipeline can then be executed from the  `/ACMGA`  directory in two steps as shown below. 
+The pipeline can then be executed from the  `ACMGA/`  directory in two steps as shown below. 
 ```
 cd ACMGA
 snakemake  -j 5 --configfile config/myconfig.yaml   --use-singularity  --singularity-args "-B $(pwd)"
