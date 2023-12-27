@@ -36,7 +36,7 @@ The use of ACMGA currently requires the support of snakemake (>6.0.0), docker an
 
 
 # Quickstart
-For a quickstart with your own data, you can follow the instructions below. We recommend testing the pipeline with our test data first (see section  **Testing the pipeline**), to ensure the pipeline will work correctly.
+For a quickstart with your own data, you can follow the instructions below. We recommend testing the pipeline with our test data first (see section  [**Testing the pipeline**](#section2)), to ensure the pipeline will work correctly.
 
 To get started, clone this repository.
 
@@ -75,7 +75,7 @@ docker run -v $(pwd):/data --rm -it mgatools/acmga:1.0
 sh command.sh
 ```
 Use docker image from  [the latest release](https://hub.docker.com/repository/docker/mgatools/acmga/general) 
-# Testing the pipeline
+# <a name="section2">Testing the pipelin</a>
 ## Build environment
 
 ### 1、Create a conda environment named "acmga" with Python 3.10 and Snakemake
