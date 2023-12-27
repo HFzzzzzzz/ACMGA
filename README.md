@@ -75,7 +75,7 @@ docker run -v $(pwd):/data --rm -it mgatools/acmga:1.0
 sh command.sh
 ```
 Use docker image from  [the latest release](https://hub.docker.com/repository/docker/mgatools/acmga/general) 
-# <a name="section2">Testing the pipelin</a>
+# <a name="section2">Testing the pipeline</a>
 ## Build environment
 
 ### 1、Create a conda environment named "acmga" with Python 3.10 and Snakemake
