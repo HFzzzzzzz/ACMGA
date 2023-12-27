@@ -36,7 +36,7 @@ The use of ACMGA currently requires the support of snakemake (>6.0.0), docker an
 
 
 # Quickstart
-For a quickstart with your own data, you can follow the instructions below. We recommend testing the pipeline with our test data first (see section  [**Testing the pipeline**](#section2)), to ensure the pipeline will work correctly.
+For a quickstart with your own data, you can follow the instructions below. We recommend testing the pipeline with our test data first (see section [**Testing the pipeline**](#section2)), to ensure the pipeline will work correctly.
 
 To get started, clone this repository.
 
