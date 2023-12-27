@@ -41,7 +41,7 @@ For a quickstart with your own data, you can follow the instructions below. We r
 To get started, clone this repository.
 
 You can now prepare the run with the pipeline by doing the following:
- 1.  Place your FASTA sequences, gff file suffixed with  `.gff3` and a  guide tree  into  `ACMGA/data`
+ 1.  Place your FASTA sequences, gff files suffixed with  `.gff3` and a  guide tree  into  `ACMGA/data`
  2.  Place the CDS sequences set from all the input genomes into `ACMGA/data`
  3. For example
  
