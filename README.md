@@ -67,7 +67,7 @@ snakemake  -j 5 --configfile config/myconfig.yaml   --use-singularity  --singula
 First step will generate the `command.sh` script in the data file.
 
 
-The second step is to enter the docker environment and run `command.sh`
+Second step is to enter the docker environment and run `command.sh`
 
 ```
 docker login
