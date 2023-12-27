@@ -28,7 +28,7 @@ pip install bioython
 - gffread
 - k8
 - last
-- 
+
 Using this approach, you need to make slight modifications to some of the paths within `command.sh`
 ### Using Docker image
 The use of ACMGA currently requires the support of snakemake (>6.0.0), docker and singularity. Please ensure that they have been installed before running ACMGA. We recommend that you use this approach.
