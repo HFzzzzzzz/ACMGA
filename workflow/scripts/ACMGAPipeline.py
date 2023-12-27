@@ -65,7 +65,7 @@ def make_paf_alignments(event_tree_string, event_names_to_sequences, ancestor_ev
         else:
             genome_a_Variety=event_names_to_sequences[ingroup.iD]
             # print("line 64",genome_a_Variety)
-            gffn=genome_a_Variety+'.ancestor.gff'
+            gffn=genome_a_Variety+'.ancestor.gff3'
             # print("line 69",gffn)
             if gffn not in newgff:
                 print("minimap2 "+minimap2ForGff + PATH + genome_a_Variety + ".ref" + "   " +uniquePath+ " > " + PATH + genome_a_Variety + ".cds.sam")
@@ -73,8 +73,8 @@ def make_paf_alignments(event_tree_string, event_names_to_sequences, ancestor_ev
                 print("bedtools bamtobed -bed12 -i " + PATH + genome_a_Variety + ".cds.bam" + " | " + " bedtools sort > " + PATH + genome_a_Variety + ".cds.bed")
                 print("bedToGenePred " + PATH + genome_a_Variety + ".cds.bed" + " " + PATH + genome_a_Variety + ".cds.genepred")
                 print("genePredToGtf"+ " \"file\" " + PATH + genome_a_Variety + ".cds.genepred " + " " + PATH + genome_a_Variety + ".cds.gtf")
-                print("gffread -E -M -K -Q -L -O " + PATH + genome_a_Variety + ".cds.gtf" + " -o- | sed 's/;locus=/;Parent=/g' | sed 's/geneID/gene_ID/g' | grep -v \"\slocus\s\">" + PATH + genome_a_Variety + ".gff")
-                newgff.append(genome_a_Variety+ ".ancestor.gff")
+                print("gffread -E -M -K -Q -L -O " + PATH + genome_a_Variety + ".cds.gtf" + " -o- | sed 's/;locus=/;Parent=/g' | sed 's/geneID/gene_ID/g' | grep -v \"\slocus\s\">" + PATH + genome_a_Variety + ".gff3")
+                newgff.append(genome_a_Variety+ ".ancestor.gff3")
         if event_names_to_sequences[ingroup2.iD] not in ancestor:
             for fasta_Variety in fastaVariety:
                 if fasta_Variety in event_names_to_sequences[ingroup2.iD]:
@@ -210,15 +210,15 @@ def make_chunked_alignments( event_a, genome_a, event_b, genome_b, distance, par
     else:
         genome_a_Variety = genome_a
         # print("line 192", genome_a_Variety)
-        gffn = genome_a_Variety + '.ancestor.gff'
+        gffn = genome_a_Variety + '.ancestor.gff3'
         if gffn not in newgff:
             print("minimap2 "+minimap2ForGff + PATH + genome_a_Variety + ".ref" + "   " + uniquePath+" > " + PATH + genome_a_Variety + ".cds.sam")
             print("samtools view -O BAM " + PATH + genome_a_Variety + ".cds.sam" + " | " + "samtools sort - > " + PATH + genome_a_Variety + ".cds.bam")
             print( "bedtools bamtobed -bed12 -i " + PATH + genome_a_Variety + ".cds.bam" + " | " + " bedtools sort > " + PATH + genome_a_Variety + ".cds.bed")
             print("bedToGenePred " + PATH + genome_a_Variety + ".cds.bed" + " " + PATH + genome_a_Variety + ".cds.genepred")
             print("genePredToGtf"+ " \"file\" " + PATH + genome_a_Variety + ".cds.genepred " + " " + PATH + genome_a_Variety + ".cds.gtf")
-            print("gffread -E -M -K -Q -L -O " + PATH + genome_a_Variety + ".cds.gtf" + " -o- | sed 's/;locus=/;Parent=/g' | sed 's/geneID/gene_ID/g' | grep -v \"\slocus\s\">" + PATH + genome_a_Variety + ".gff")
-            newgff.append(genome_a_Variety + ".ancestor.gff")
+            print("gffread -E -M -K -Q -L -O " + PATH + genome_a_Variety + ".cds.gtf" + " -o- | sed 's/;locus=/;Parent=/g' | sed 's/geneID/gene_ID/g' | grep -v \"\slocus\s\">" + PATH + genome_a_Variety + ".gff3")
+            newgff.append(genome_a_Variety + ".ancestor.gff3")
     if genome_b in fasta:
        for fasta_Variety in fastaVariety:
            if fasta_Variety in genome_b:
@@ -386,7 +386,7 @@ def main(xml,evolverMammals,snakemakePath,snakemakeFasta,snakemakeGff,uniqueCds,
     ancestor=list(subtree_event_set)
     for i in range(1000):
         ancestor.append("Anc"+str(i))
-        gff.append("Anc"+str(i)+".gff")
+        gff.append("Anc"+str(i)+".gff3")
     # print("line 394",ancestor,"\n",gff)
     iteration_0_events = []
     for (genome, seq) in input_seq_map.items():
