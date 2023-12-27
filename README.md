@@ -26,7 +26,7 @@ pip install bioython
 - bedToGenePred
 - genePredToGtf
 - gffread
-- k8 (Javascript shell)
+- K8 (Javascript shell)
 - last
 
 Using this approach, you need to make slight modifications to some of the paths within `command.sh`
