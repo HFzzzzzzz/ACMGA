@@ -1,4 +1,4 @@
-
+ 
 
 # ACMGA
 
@@ -14,20 +14,20 @@ ACMGA requires Python = 3.10 along with Biopython libraries. If you don't have b
 ```
 pip install bioython
 ```
-## ACMGA supports building a local environment and using docker image. 
+## ACMGA supports building a local environment and using docker image
 ### Building a local environment
 - python3.10
-- Snakemake(>6.0)
-- AnchorWave
-- Cactus
-- SAMtools
-- Minimap2
-- bedtools
-- bedToGenePred
-- genePredToGtf
-- gffread
-- K8 (Javascript shell)
-- last
+- [Snakemake(>6.0)](https://snakemake.readthedocs.io/en/stable/getting_started/installation.html)
+- [AnchorWave](https://github.com/baoxingsong/AnchorWave)
+- [Cactus](https://github.com/ComparativeGenomicsToolkit/cactus)
+- [SAMtools](http://www.htslib.org/)
+- [Minimap2](https://github.com/lh3/minimap2)
+- [bedtools](https://github.com/arq5x/bedtools2)
+- [bedToGenePred](https://github.com/ENCODE-DCC/kentUtils/tree/master/src/hg/bedToGenePred)
+- [genePredToGtf](https://github.com/ENCODE-DCC/kentUtils/tree/master/src/hg/genePredToGtf)
+- [gffread](https://github.com/gpertea/gffread)
+- [K8](https://github.com/attractivechaos/k8)
+- [last](https://github.com/UCSantaCruzComputationalGenomicsLab/last/tree/master)
 
 Using this approach, you need to make slight modifications to some of the paths within `command.sh`
 ### Using Docker image
@@ -51,11 +51,11 @@ You can now prepare the run with the pipeline by doing the following:
 	 
 	-  input FASTA sequences name ( parameter  `fasta:` )
 	-  input GFF name and ancestor GFF name ( parameter  `gff:` )
-	-  path for the collection of CDS ( parameter `nonDuplicateCDS:` )
+	-  path for the collection of CDS ( parameter `nonDuplicateCDS:` ), you can use this [script](https://github.com/HFzzzzzzz/ACMGA/blob/master/workflow/scripts/CombineCDS.py) to merge cds files to get `non_duplicate_CDS.fa`
 	-  path of FASTA, GFF file (parameter  `path:` )
 	-  species name ( parameter  `species:` )
 	- ancestor name ( parameter `ancestor:` )
-	- path of guide tree ( parameter `Tree:` )
+	- path of guide tree ( parameter `Tree:` ), you can use these [steps](#section1) to generate a guide tree
 
 
 
@@ -76,42 +76,61 @@ sh command.sh
 ```
 Use docker image from  [the latest release](https://hub.docker.com/repository/docker/mgatools/acmga/general) 
 # Testing the pipeline
+## Build environment
 
-Assume that you already have a conda environment named **testPipeline** with python 3.10, Snakemake has been successfully installed in this environment. Docker and Singularity have been installed successfully.
+### 1、Create a conda environment named "acmga" with Python 3.10 and Snakemake
+```
+conda install -n base -c conda-forge mamba
+conda activate base
+mamba create -c conda-forge -c bioconda -n acmga python=3.10 snakemake
+```
+### 2、Install Docker and Singularity following the documentation instructions.
 
+ - [singularity installation guide](https://github.com/sylabs/singularity/blob/master/INSTALL.md)
+ - [docker installation guide](https://docs.docker.com/engine/install/ubuntu/)
+
+## Run ACMGA
 To test the pipeline before running on your own data, you can align some Arabidopsis sequences. 
+### 1、Download the code and activate the environment
 ```
 git clone https://github.com/HFzzzzzzz/ACMGA.git
-conda activate testPipeline
+conda activate acmga
 ```
-## 1、Prepare data
+
+### 2、Download Arabidopsis data
 ```
 cd ACMGA/data
 sh download.sh
 cd ..
 ```
-## 2、Generate `command.sh`
+### 3、Generate `command.sh`
 ```
 snakemake  -j 5 --configfile config/config.yaml   --use-singularity  --singularity-args "-B  $(pwd)`
 ```
-## 3、Run `command.sh`
+### 4、Run `command.sh`
 ```
 docker login
 docker run -v $(pwd):/data --rm -it mgatools/acmga:1.0
 sh command.sh
 ```
-# Software requirements
-Snakemake is required to run this pipeline and we recommend snakemake version 6.0.0 or higher. The recommended installation is shown below. For more details see  [snakemake installation guide](https://snakemake.readthedocs.io/en/stable/getting_started/installation.html).
-
+ # <a name="section1">Generate a guide tree</a>
+ ## 1、Use the GEAN tool to generate protein sequences by inputting fasta and gff files.
 ```
-conda install -n base -c conda-forge mamba
-conda activate base
-mamba create -c conda-forge -c bioconda -n snakemake snakemake
+./gean gff2seq -i /media/zhf/ext1/Downloads/gff/gff_chr1-5/Cvi.protein-coding.genes.v2.5.2019-10-09.gff3 -r /media/zhf/ext1/Downloads/fasta/fasta_chr1-5/Cvi.chr.all.v2.0.fasta -p /media/zhf/ext1/Downloads/protein/Cvi.protein.fa -c /media/zhf/ext1/Downloads/protein/Cvi.cds.fa -g /media/zhf/ext1/Downloads/protein/Cvi.gene.fa
+
+./gean gff2seq -i /media/zhf/ext1/Downloads/gff/gff_chr1-5/An-1.protein-coding.genes.v2.5.2019-10-09.gff3 -r /media/zhf/ext1/Downloads/fasta/fasta_chr1-5/An-1.chr.all.v2.0.fasta -p /media/zhf/ext1/Downloads/protein/An-1.protein.fa -c /media/zhf/ext1/Downloads/protein/An-1.cds.fa -g /media/zhf/ext1/Downloads/protein/An-1.gene.fa
+
+./gean gff2seq -i /media/zhf/ext1/Downloads/gff/gff_chr1-5/Ler.protein-coding.genes.v2.5.2019-10-09.gff3 -r /media/zhf/ext1/Downloads/fasta/fasta_chr1-5/Ler.chr.all.v2.0.fasta -p /media/zhf/ext1/Downloads/protein/Ler.protein.fa -c /media/zhf/ext1/Downloads/protein/Ler.cds.fa -g /media/zhf/ext1/Downloads/protein/Ler.gene.fa
+
+./gean gff2seq -i /media/zhf/ext1/Downloads/gff/gff_chr1-5/Arabidopsis_thaliana.TAIR10.56.gff3 -r /media/zhf/ext1/Downloads/fasta/fasta_chr1-5/Arabidopsis_thaliana.TAIR10.dna.toplevel.fa -p /media/zhf/ext1/Downloads/protein/Arabidopsis_thaliana.protein.fa -c /media/zhf/ext1/Downloads/protein/Arabidopsis_thaliana.cds.fa -g /media/zhf/ext1/Downloads/protein/Arabidopsis_thaliana.gene.fa
 ```
+## 2、Use the OrthoFinder tool to generate guide tree
+ Create the ExampleData folder in the OrthoFinder directory, put the generated protein sequence into the ExampleData folder, and use the following command to generate a guide tree
+```
+OrthoFinder/orthofinder -f OrthoFinder/ExampleData
+```
+`OrthoFinder/ExampleData/OrthoFinder/Results_xxx/Species_Tree/SpeciesTree_rooted_node_labels.txt` is the generated guide tree file
 
-Note that the installation should use the exact commands above, including the exact channel priority, otherwise snakemake may be improperly installed.
-
-To run the pipeline using a prebuilt singularity container, you must have singularity installed on your system. Singularity is installed on many HPC systems and can be used without root privileges. However, note that installation of singularity does require root privileges. If you want to install singularity and have these privileges, you can find up-to-date instructions on how to do so in the official  [singularity installation guide](https://github.com/sylabs/singularity/blob/master/INSTALL.md).
 # Explanation of output files
 The intermediate results of ACMGA are written to the data directory or subdirectories with outputs from different steps of the pipeline. The final output that multiple genome alignment result  as `result/evolverPlants.hal`
 
@@ -123,7 +142,8 @@ When the snakemake run terminates with an error despite snakemake (version > 6.0
 
 -   Input FASTA files and gff files in the /data directory do not match samples listed in the config file parameters  `species`.
 -   Input FASTA files and gff files have chromosomes/scaffolds with special characters; ideally, we want names consisting of only alphanumeric characters.
--   The config.yaml ancestor parameters is not enough. It should set the number according to your ancestor nodes, If you are unsure of the exact count of ancestor nodes, then set as many as possible. The maximum range is N0-N(2^(k-1)^-1) (k is depth of the guide tree), to avoid the error of insufficient ancestor nodes.
+-   The config.yaml ancestor parameters is not enough. It should set the number according to your ancestor nodes, If you are unsure of the exact count of ancestor nodes, then set as many as possible. The maximum range is N0-N(2^(k-1)^-1)
+ (k is depth of the guide tree), to avoid the error of insufficient ancestor nodes.
 - If the test case is fails, please check whether the data download is incomplete due to network problems.
 
 
