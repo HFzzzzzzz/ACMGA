@@ -14,7 +14,7 @@ ACMGA requires Python = 3.10 along with Biopython libraries. If you don't have b
 ```
 pip install bioython
 ```
-## ACMGA supports building a local environment and using docker image. 
+## ACMGA supports building a local environment and using docker image
 ### Building a local environment
 - python3.10
 - [Snakemake(>6.0)](https://snakemake.readthedocs.io/en/stable/getting_started/installation.html)
