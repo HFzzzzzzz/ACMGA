@@ -142,7 +142,8 @@ When the snakemake run terminates with an error despite snakemake (version > 6.0
 
 -   Input FASTA files and gff files in the /data directory do not match samples listed in the config file parameters  `species`.
 -   Input FASTA files and gff files have chromosomes/scaffolds with special characters; ideally, we want names consisting of only alphanumeric characters.
--   The config.yaml ancestor parameters is not enough. It should set the number according to your ancestor nodes, If you are unsure of the exact count of ancestor nodes, then set as many as possible. The maximum range is N0-N^(2^(k-1)^-1) (k is depth of the guide tree), to avoid the error of insufficient ancestor nodes.
+-   The config.yaml ancestor parameters is not enough. It should set the number according to your ancestor nodes, If you are unsure of the exact count of ancestor nodes, then set as many as possible. The maximum range is N0-N^{\left(2^{(k-1)}\right)^{-1}}
+ (k is depth of the guide tree), to avoid the error of insufficient ancestor nodes.
 - If the test case is fails, please check whether the data download is incomplete due to network problems.
 
 
