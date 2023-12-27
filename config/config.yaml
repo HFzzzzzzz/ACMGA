@@ -19,7 +19,8 @@ fasta:
    'Ler.chr.all.v2.0.fasta'
   ]
 
-#Collection of gff file names corresponding to input fasta files and the gff file name for the ancestral sequence ( with the .gff suffix).
+#1、Collection of gff file names corresponding to input fasta files
+#2、Collection of gff file names for the ancestral sequence (N0.gff~N∞.gff) ( with the .gff suffix).
 gff:
   ['Cvi.protein-coding.genes.v2.5.2019-10-09.gff3',
    'Eri.protein-coding.genes.v2.5.2019-10-09.gff3',
@@ -60,22 +61,24 @@ ancestor:
      'N1',
      'N2',
  ]
+
 #The paths where the GFF file, FASTA file are located.
 PATH:
-    '/data/Arabidopsis/'
+    'data/Arabidopsis/'
+
+#The path of collection of CDS files
+nonDuplicateCDS:
+    'data/non_duplicate_CDS.fa'
+
+
+
 #The path of guide tree
 Tree:
     'data/evolverPlant.txt'
-#The path of collection of CDS files
-uniqueCds:
-    'data/Arabidopsis/unique.fa'
-
 
 #The XML file required for the ACMGA to run.
 XML:
-    'data/cactus_progressive_config.xml'
-
-
+    'workflow/envs/cactus_progressive_config.xml'
 
 #The default parameters of minimap in ACMGA, it is recommended to use the default parameters.
 minimap2ForGff:

@@ -13,7 +13,8 @@ from sonLib.bioio import newickTreeParser
 from cactus.paf.paf import get_event_pairs, get_leaves, get_node, get_distances
 from cactus.paf.local_alignment import make_ingroup_to_outgroup_alignments_1
 import re
-import sys
+import argparse
+
 
 oldgenome_a=''
 oldgenome_b=''
@@ -54,6 +55,7 @@ def make_paf_alignments(event_tree_string, event_names_to_sequences, ancestor_ev
 
     for  ingroup, ingroup2, distance_a_b in get_event_pairs(ancestor_event, ingroup_events):
         print("#align " + event_names_to_sequences[ingroup.iD] + "\tagainst\t" + event_names_to_sequences[ingroup2.iD])
+        print("\n" + "#m=============================================================================================================================================================================================================================" + str(i) + "\n")
         # print("line 60 ",event_names_to_sequences[ingroup.iD])
         if event_names_to_sequences[ingroup.iD] not in ancestor:
                 for fasta_Variety in fastaVariety:
@@ -83,44 +85,44 @@ def make_paf_alignments(event_tree_string, event_names_to_sequences, ancestor_ev
         gffnstr=[n for n in gff if genome_a_Variety in n][0]
         # print("line 87",gffnstr)
         if ((event_names_to_sequences[ingroup.iD] in fasta) and (event_names_to_sequences[ingroup2.iD] in ancestor)):
-            print("anchorwave gff2seq -i " + PATH + gffnstr + "   -r " + PATH + event_names_to_sequences[ ingroup.iD] + "  -o " + genome_a_Variety + "_cds.fa")
-            print("minimap2" +minimap2Paramters + PATH + event_names_to_sequences[ingroup2.iD] + ".ref " + genome_a_Variety + "_cds.fa > " + genome_b_Variety + "_" + genome_a_Variety + "_cds.sam")
-            print("minimap2" +minimap2Paramters + PATH + event_names_to_sequences[ingroup.iD] + "  " + genome_a_Variety + "_cds.fa > " + genome_a_Variety + "_" + genome_a_Variety + "_ref.sam")
-            print("/usr/bin/time anchorwave proali -i " + PATH + gffnstr + " -as " + genome_a_Variety + "_cds.fa  " + " -r " + PATH +event_names_to_sequences[ingroup.iD] + " -a " + genome_b_Variety + "_" + genome_a_Variety + "_cds.sam " + " -ar " + genome_a_Variety + "_" + genome_a_Variety + "_ref.sam" + " -s " + PATH +event_names_to_sequences[ingroup2.iD] +".ref"+ " -n " + PATH + genome_a_Variety + "_" + genome_b_Variety + ".anchors" \
+            print("anchorwave gff2seq -i " + PATH + gffnstr + "   -r " + PATH + event_names_to_sequences[ ingroup.iD] + "  -o " +PATH+ genome_a_Variety + "_cds.fa")
+            print("minimap2" +minimap2Paramters + PATH + event_names_to_sequences[ingroup2.iD] + ".ref " + PATH+genome_a_Variety + "_cds.fa > " +PATH+ genome_b_Variety + "_" + genome_a_Variety + "_cds.sam")
+            print("minimap2" +minimap2Paramters + PATH + event_names_to_sequences[ingroup.iD] + "  " + PATH+genome_a_Variety + "_cds.fa > " +PATH+ genome_a_Variety + "_" + genome_a_Variety + "_ref.sam")
+            print("/usr/bin/time anchorwave proali -i " + PATH + gffnstr + " -as " + PATH+genome_a_Variety + "_cds.fa  " + " -r " + PATH +event_names_to_sequences[ingroup.iD] + " -a " + PATH+genome_b_Variety + "_" + genome_a_Variety + "_cds.sam " + " -ar " +PATH+ genome_a_Variety + "_" + genome_a_Variety + "_ref.sam" + " -s " + PATH +event_names_to_sequences[ingroup2.iD] +".ref"+ " -n " + PATH + genome_a_Variety + "_" + genome_b_Variety + ".anchors" \
             + " -o " + PATH + genome_a_Variety + "_" + genome_b_Variety + ".anchorwave.maf" + " -f " + PATH + genome_a_Variety + "_" + genome_b_Variety + ".anchorwave.f.maf" + proaliParamters +" > " + genome_a_Variety + "_" + genome_b_Variety + ".log 2>&1")
             print("maf-convert sam " + PATH + genome_a_Variety + "_" + genome_b_Variety + ".anchorwave.maf" + " > " + PATH + genome_a_Variety + "_" + genome_b_Variety + ".anchorwave.sam")
             print("samtools view -H --reference " + PATH + event_names_to_sequences[ingroup.iD] + "  " + PATH + genome_a_Variety + "_" + genome_b_Variety + ".anchorwave.sam" + " > " + PATH + genome_a_Variety + "_" + genome_b_Variety + ".2" + ".anchorwave.sam")
             print("grep -v \"^@\" "+ PATH + genome_a_Variety + "_" + genome_b_Variety + ".anchorwave.sam" +" >> " + PATH + genome_a_Variety + "_" + genome_b_Variety + ".2" + ".anchorwave.sam")
         elif ((event_names_to_sequences[ingroup.iD] in fasta) and (event_names_to_sequences[ingroup2.iD] in fasta)):
-            print("anchorwave gff2seq -i " + PATH + gffnstr + "   -r " + PATH + event_names_to_sequences[ingroup.iD] + "  -o " + genome_a_Variety + "_cds.fa")
-            print("minimap2 "+minimap2Paramters + PATH + event_names_to_sequences[ingroup2.iD] + "  " + genome_a_Variety + "_cds.fa > " + genome_b_Variety + "_" + genome_a_Variety + "_cds.sam")
-            print("minimap2 "+minimap2Paramters + PATH + event_names_to_sequences[ingroup.iD] + "  " + genome_a_Variety + "_cds.fa > " + genome_a_Variety + "_" + genome_a_Variety + "_ref.sam")
-            print("/usr/bin/time anchorwave genoAli -i " + PATH + gffnstr + " -as " + genome_a_Variety + "_cds.fa  " + " -r " + PATH +event_names_to_sequences[ingroup.iD] + " -a " + genome_b_Variety + "_" + genome_a_Variety + "_cds.sam " + " -ar " + genome_a_Variety + "_" + genome_a_Variety + "_ref.sam" + " -s " + PATH +event_names_to_sequences[ingroup2.iD] + " -n " + PATH + genome_a_Variety + "_" + genome_b_Variety + ".anchors" \
+            print("anchorwave gff2seq -i " + PATH + gffnstr + "   -r " + PATH + event_names_to_sequences[ingroup.iD] + "  -o " + PATH+genome_a_Variety + "_cds.fa")
+            print("minimap2 "+minimap2Paramters + PATH + event_names_to_sequences[ingroup2.iD]+ "  " +PATH+ genome_a_Variety + "_cds.fa > " +PATH+ genome_b_Variety + "_" + genome_a_Variety + "_cds.sam")
+            print("minimap2 "+minimap2Paramters + PATH + event_names_to_sequences[ingroup.iD] + "  " +PATH+ genome_a_Variety + "_cds.fa > " +PATH+ genome_a_Variety + "_" + genome_a_Variety + "_ref.sam")
+            print("/usr/bin/time anchorwave genoAli -i " + PATH + gffnstr + " -as " +PATH+ genome_a_Variety + "_cds.fa  " + " -r " + PATH +event_names_to_sequences[ingroup.iD] + " -a " +PATH+  genome_b_Variety + "_" + genome_a_Variety + "_cds.sam " + " -ar " +PATH+ genome_a_Variety + "_" + genome_a_Variety + "_ref.sam" + " -s " + PATH +event_names_to_sequences[ingroup2.iD] + " -n " + PATH + genome_a_Variety + "_" + genome_b_Variety + ".anchors" \
             + " -o " + PATH + genome_a_Variety + "_" + genome_b_Variety + ".anchorwave.maf" + " -f " + PATH + genome_a_Variety + "_" + genome_b_Variety + ".anchorwave.f.maf" + genoaliParamters + " > " + genome_a_Variety + "_" + genome_b_Variety + ".log 2>&1")
             print("maf-convert sam " + PATH + genome_a_Variety + "_" + genome_b_Variety + ".anchorwave.maf" + " > " + PATH + genome_a_Variety + "_" + genome_b_Variety + ".anchorwave.sam")
             print("samtools view -H --reference " + PATH + event_names_to_sequences[ingroup.iD] + "  " + PATH + genome_a_Variety + "_" + genome_b_Variety + ".anchorwave.sam" + " > " + PATH + genome_a_Variety + "_" + genome_b_Variety + ".2" + ".anchorwave.sam")
             print("grep -v \"^@\" "+ PATH + genome_a_Variety + "_" + genome_b_Variety + ".anchorwave.sam" +" >> " + PATH + genome_a_Variety + "_" + genome_b_Variety + ".2" + ".anchorwave.sam")
         elif((event_names_to_sequences[ingroup.iD] not in fasta) and (event_names_to_sequences[ingroup2.iD] in fasta)):
-            print("anchorwave gff2seq -i " + PATH + gffnstr + "   -r " + PATH + event_names_to_sequences[ingroup.iD] +".ref"+ "  -o " + genome_a_Variety + "_cds.fa")
-            print("minimap2  "+minimap2Paramters + PATH + event_names_to_sequences[ingroup2.iD] +" " + genome_a_Variety + "_cds.fa > " + genome_b_Variety + "_" + genome_a_Variety + "_cds.sam")
-            print("minimap2  "+minimap2Paramters + PATH + event_names_to_sequences[ingroup.iD] +".ref"+ " " + genome_a_Variety + "_cds.fa > " + genome_a_Variety + "_" + genome_a_Variety + "_ref.sam")
-            print("/usr/bin/time anchorwave proali -i " + PATH + gffnstr + " -as " + genome_a_Variety + "_cds.fa  " + " -r " + PATH +event_names_to_sequences[ingroup.iD] + ".ref" + " -a " + genome_b_Variety + "_" + genome_a_Variety + "_cds.sam " + " -ar " + genome_a_Variety + "_" + genome_a_Variety + "_ref.sam" + " -s " + PATH +
+            print("anchorwave gff2seq -i " + PATH + gffnstr + "   -r " + PATH + event_names_to_sequences[ingroup.iD] +".ref"+ "  -o " + PATH+genome_a_Variety + "_cds.fa")
+            print("minimap2  "+minimap2Paramters + PATH + event_names_to_sequences[ingroup2.iD] +" " +        PATH+genome_a_Variety + "_cds.fa > " +PATH+ genome_b_Variety + "_" + genome_a_Variety + "_cds.sam")
+            print("minimap2  "+minimap2Paramters + PATH + event_names_to_sequences[ingroup.iD] +".ref"+ " " + PATH+genome_a_Variety + "_cds.fa > " +PATH+ genome_a_Variety + "_" + genome_a_Variety + "_ref.sam")
+            print("/usr/bin/time anchorwave proali -i " + PATH + gffnstr + " -as " + PATH+genome_a_Variety + "_cds.fa  " + " -r " + PATH +event_names_to_sequences[ingroup.iD] + ".ref" + " -a " +PATH+ genome_b_Variety + "_" + genome_a_Variety + "_cds.sam " + " -ar " +PATH+ genome_a_Variety + "_" + genome_a_Variety + "_ref.sam" + " -s " + PATH +
             event_names_to_sequences[ingroup2.iD] + " -n " + PATH + genome_a_Variety + "_" + genome_b_Variety + ".anchors" \
             + " -o " + PATH + genome_a_Variety + "_" + genome_b_Variety + ".anchorwave.maf" + " -f " + PATH + genome_a_Variety + "_" + genome_b_Variety + ".anchorwave.f.maf" + proaliParamters+"  > " + genome_a_Variety + "_" + genome_b_Variety + ".log 2>&1")
             print("maf-convert sam " + PATH + genome_a_Variety + "_" + genome_b_Variety + ".anchorwave.maf" + " > " + PATH + genome_a_Variety + "_" + genome_b_Variety + ".anchorwave.sam")
             print("samtools view -H --reference " + PATH + event_names_to_sequences[ingroup.iD]+".ref" + "  " + PATH + genome_a_Variety + "_" + genome_b_Variety + ".anchorwave.sam" + " > " + PATH + genome_a_Variety + "_" + genome_b_Variety + ".2" + ".anchorwave.sam")
             print("grep -v \"^@\" " + PATH + genome_a_Variety + "_" + genome_b_Variety + ".anchorwave.sam" + " >> " + PATH + genome_a_Variety + "_" + genome_b_Variety + ".2" + ".anchorwave.sam")
         else:
-            print("anchorwave gff2seq -i " + PATH + gffnstr + "   -r " + PATH + event_names_to_sequences[ingroup.iD] +".ref"+ "  -o " + genome_a_Variety + "_cds.fa")
-            print("minimap2  "+minimap2Paramters + PATH + event_names_to_sequences[ingroup2.iD]+".ref" + " " + genome_a_Variety + "_cds.fa > " + genome_b_Variety + "_" + genome_a_Variety + "_cds.sam")
-            print("minimap2  "+minimap2Paramters + PATH + event_names_to_sequences[ingroup.iD] +".ref"+ " " + genome_a_Variety + "_cds.fa > " + genome_a_Variety + "_" + genome_a_Variety + "_ref.sam")
-            print("/usr/bin/time anchorwave proali -i "+PATH+gffnstr+" -as "+genome_a_Variety+"_cds.fa  "+" -r "+PATH+event_names_to_sequences[ingroup.iD]+".ref"+" -a "+genome_b_Variety+"_"+genome_a_Variety+"_cds.sam "+" -ar "+genome_a_Variety+"_"+genome_a_Variety+"_ref.sam"+" -s "+PATH+event_names_to_sequences[ingroup2.iD]+".ref"+" -n "+PATH + genome_a_Variety + "_" + genome_b_Variety +".anchors" \
+            print("anchorwave gff2seq -i " + PATH + gffnstr + "   -r " + PATH + event_names_to_sequences[ingroup.iD] +".ref"+ "  -o " + PATH+genome_a_Variety + "_cds.fa")
+            print("minimap2  "+minimap2Paramters + PATH + event_names_to_sequences[ingroup2.iD]+".ref"+ " " + PATH+genome_a_Variety + "_cds.fa > " + PATH+genome_b_Variety + "_" + genome_a_Variety + "_cds.sam")
+            print("minimap2  "+minimap2Paramters + PATH + event_names_to_sequences[ingroup.iD] +".ref"+ " " + PATH+genome_a_Variety + "_cds.fa > " + PATH+genome_a_Variety + "_" + genome_a_Variety + "_ref.sam")
+            print("/usr/bin/time anchorwave proali -i "+PATH+gffnstr+" -as "+PATH+genome_a_Variety+"_cds.fa  "+" -r "+PATH+event_names_to_sequences[ingroup.iD]+".ref"+" -a "+PATH+genome_b_Variety+"_"+genome_a_Variety+"_cds.sam "+" -ar "+PATH+genome_a_Variety+"_"+genome_a_Variety+"_ref.sam"+" -s "+PATH+event_names_to_sequences[ingroup2.iD]+".ref"+" -n "+PATH + genome_a_Variety + "_" + genome_b_Variety +".anchors" \
                   + " -o " + PATH + genome_a_Variety + "_" + genome_b_Variety + ".anchorwave.maf" + " -f " + PATH + genome_a_Variety + "_" + genome_b_Variety + ".anchorwave.f.maf" + proaliParamters +" > "+genome_a_Variety+"_"+genome_b_Variety+".log 2>&1")
             print("maf-convert sam " + PATH + genome_a_Variety + "_" + genome_b_Variety + ".anchorwave.maf" + " > " + PATH + genome_a_Variety + "_" + genome_b_Variety + ".anchorwave.sam")
             print("samtools view -H --reference " + PATH + event_names_to_sequences[ingroup.iD] +".ref"+ "  " + PATH + genome_a_Variety + "_" + genome_b_Variety + ".anchorwave.sam" + " > " + PATH + genome_a_Variety + "_" + genome_b_Variety + ".2" + ".anchorwave.sam")
             print("grep -v \"^@\" "+ PATH + genome_a_Variety + "_" + genome_b_Variety + ".anchorwave.sam" +" >> " + PATH + genome_a_Variety + "_" + genome_b_Variety + ".2" + ".anchorwave.sam")
 
-        print("k8 /data/paftools.js  sam2paf "+ PATH + genome_a_Variety + "_" + genome_b_Variety +".2"+".anchorwave.sam"+" > "+ PATH + genome_a_Variety + "_" + genome_b_Variety +".tmp.anchorwave.paf")
+        print("k8 /data/workflow/envs/paftools.js" + " sam2paf "+ PATH + genome_a_Variety + "_" + genome_b_Variety +".2"+".anchorwave.sam"+" > "+ PATH + genome_a_Variety + "_" + genome_b_Variety +".tmp.anchorwave.paf")
         for (genome, seq) in input_seq_map.items():
             global replacenamea
             global replacenameb
@@ -134,7 +136,7 @@ def make_paf_alignments(event_tree_string, event_names_to_sequences, ancestor_ev
         if genome_b_Variety in ancestor:
             replacenameb = genome_b_Variety
         if replacenamea and replacenameb:
-            print("python /data/replace_ref_que.py -i " + PATH + genome_a_Variety + "_" + genome_b_Variety + ".tmp.anchorwave.paf" + " -o " + PATH + genome_a_Variety + "_" + genome_b_Variety + ".anchorwave.paf" + " -r " + replacenamea+" -q " +replacenameb)
+            print("python /data/workflow/scripts/replace_ref_que.py -i " + PATH + genome_a_Variety + "_" + genome_b_Variety + ".tmp.anchorwave.paf" + " -o " + PATH + genome_a_Variety + "_" + genome_b_Variety + ".anchorwave.paf" + " -r " + replacenamea+" -q " +replacenameb)
                 # print("python replace_ref_que.py -i " + PATH + genome_a_Variety + "_" + genome_b_Variety + ".tmp.anchorwave.paf" + " -o " + PATH + genome_a_Variety + "_" + genome_b_Variety + ".anchorwave.paf" + " -r " + genome_a_Variety +"_protein"+ " -q " + genome_b_Variety+"_protein")
         print("cat "+ PATH + genome_a_Variety + "_" + genome_b_Variety +".anchorwave.paf"+" > "+ PATH + genome_a_Variety + "_" + genome_b_Variety +".anchorwave_invert.paf")
         print("paf_invert -i "+ PATH + genome_a_Variety + "_" + genome_b_Variety +".anchorwave.paf"+" >> "+ PATH + genome_a_Variety + "_" + genome_b_Variety +".anchorwave_invert.paf")
@@ -228,45 +230,45 @@ def make_chunked_alignments( event_a, genome_a, event_b, genome_b, distance, par
     # print("line 206",gffname)
     gffnstr = gffname[0]
     if ((genome_a in fasta )and(genome_b not in fasta)):
-        print("anchorwave gff2seq -i " + PATH + gffnstr+ "   -r " + PATH +genome_a + "  -o " + genome_a_Variety+"_cds.fa")
-        print("minimap2  " +minimap2Paramters+ PATH + genome_b + ".ref " + genome_a_Variety + "_cds.fa > " + genome_b_Variety + "_" + genome_a_Variety + "_cds.sam")
-        print("minimap2  " +minimap2Paramters+ PATH + genome_a + "  " + genome_a_Variety + "_cds.fa > " + genome_a_Variety + "_" + genome_a_Variety + "_ref.sam")
-        print("/usr/bin/time anchorwave proali -i " + PATH + gffnstr + " -as " + genome_a_Variety + "_cds.fa  " + " -r " + PATH + genome_a + " -a " + genome_b_Variety + "_" + genome_a_Variety + "_cds.sam " + " -ar " + genome_a_Variety + "_" + genome_a_Variety + "_ref.sam" + " -s " + PATH + genome_b+".ref" + " -n " + PATH + genome_a_Variety + "_" + genome_b_Variety + ".anchors" \
+        print("anchorwave gff2seq -i " + PATH + gffnstr+ "   -r " + PATH +genome_a + "  -o " + PATH+ genome_a_Variety+"_cds.fa")
+        print("minimap2  " +minimap2Paramters+ PATH + genome_b + ".ref " + genome_a_Variety + "_cds.fa > " + PATH+ genome_b_Variety + "_" + genome_a_Variety + "_cds.sam")
+        print("minimap2  " +minimap2Paramters+ PATH + genome_a + "  " + genome_a_Variety + "_cds.fa > "     +PATH+ genome_a_Variety + "_" + genome_a_Variety + "_ref.sam")
+        print("/usr/bin/time anchorwave proali -i " + PATH + gffnstr + " -as " + PATH+ genome_a_Variety + "_cds.fa  " + " -r " + PATH + genome_a + " -a " +PATH+  genome_b_Variety + "_" + genome_a_Variety + "_cds.sam " + " -ar " + PATH+ genome_a_Variety + "_" + genome_a_Variety + "_ref.sam" + " -s " + PATH + genome_b+".ref" + " -n " + PATH + genome_a_Variety + "_" + genome_b_Variety + ".anchors" \
             + " -o " + PATH + genome_a_Variety + "_" + genome_b_Variety + ".anchorwave.maf" + " -f " + PATH + genome_a_Variety + "_" + genome_b_Variety + ".anchorwave.f.maf" + proaliParamters+" > " + genome_a_Variety + "_" + genome_b_Variety + ".log 2>&1")
         print("maf-convert sam " + PATH + genome_a_Variety + "_" + genome_b_Variety + ".anchorwave.maf" + "  > " + PATH + genome_a_Variety + "_" + genome_b_Variety + ".2" + ".anchorwave.sam")
         print("samtools view -H --reference " + PATH + genome_a + "  " + PATH + genome_a_Variety + "_" + genome_b_Variety + ".2" + ".anchorwave.sam" + " > " + PATH + genome_a_Variety + "_" + genome_b_Variety + ".3" + ".anchorwave.sam")
         print("grep -v \"^@\" "+ PATH + genome_a_Variety + "_" + genome_b_Variety + ".2" + ".anchorwave.sam"+" >> "+ PATH + genome_a_Variety + "_" + genome_b_Variety + ".3" + ".anchorwave.sam")
 
     elif ((genome_a in fasta) and (genome_b in fasta)):
-        print("anchorwave gff2seq -i " + PATH + gffnstr + "   -r " + PATH + genome_a  + "  -o " + genome_a_Variety + "_cds.fa")
-        print("minimap2 "+minimap2Paramters + PATH + genome_b  + "  " + genome_a_Variety + "_cds.fa > " + genome_b_Variety + "_" + genome_a_Variety + "_cds.sam")
-        print("minimap2 "+minimap2Paramters + PATH + genome_a  + "  " + genome_a_Variety + "_cds.fa > " + genome_a_Variety + "_" + genome_a_Variety + "_ref.sam")
-        print("/usr/bin/time anchorwave genoAli -i " + PATH + gffnstr + " -as " + genome_a_Variety + "_cds.fa  " + " -r " + PATH + genome_a  + " -a " + genome_b_Variety + "_" + genome_a_Variety + "_cds.sam " + " -ar " + genome_a_Variety + "_" + genome_a_Variety + "_ref.sam" + " -s " + PATH + genome_b + " -n " + PATH + genome_a_Variety + "_" + genome_b_Variety + ".anchors" \
+        print("anchorwave gff2seq -i " + PATH + gffnstr + "   -r " + PATH + genome_a  + "  -o " +PATH+  genome_a_Variety + "_cds.fa")
+        print("minimap2 "+minimap2Paramters + PATH + genome_b  + "  " + PATH+ genome_a_Variety + "_cds.fa > " +PATH+ genome_b_Variety + "_" + genome_a_Variety + "_cds.sam")
+        print("minimap2 "+minimap2Paramters + PATH + genome_a  + "  " + PATH+ genome_a_Variety + "_cds.fa > " +PATH+ genome_a_Variety + "_" + genome_a_Variety + "_ref.sam")
+        print("/usr/bin/time anchorwave genoAli -i " + PATH + gffnstr + " -as " + PATH+ genome_a_Variety + "_cds.fa  " + " -r " + PATH + genome_a  + " -a " + PATH+ genome_b_Variety + "_" + genome_a_Variety + "_cds.sam " + " -ar " +PATH+  genome_a_Variety + "_" + genome_a_Variety + "_ref.sam" + " -s " + PATH + genome_b + " -n " + PATH + genome_a_Variety + "_" + genome_b_Variety + ".anchors" \
             + " -o " + PATH + genome_a_Variety + "_" + genome_b_Variety + ".anchorwave.maf" + " -f " + PATH + genome_a_Variety + "_" + genome_b_Variety + ".anchorwave.f.maf" + genoaliParamters+" > " + genome_a_Variety + "_" + genome_b_Variety + ".avx2.log 2>&1")
         print("maf-convert sam " + PATH + genome_a_Variety + "_" + genome_b_Variety + ".anchorwave.maf" + "  > " + PATH + genome_a_Variety + "_" + genome_b_Variety + ".2" + ".anchorwave.sam")
         print("samtools view -H --reference " + PATH + genome_a + "  " + PATH + genome_a_Variety + "_" + genome_b_Variety + ".2" + ".anchorwave.sam" + " > " + PATH + genome_a_Variety + "_" + genome_b_Variety + ".3" + ".anchorwave.sam")
         print("grep -v \"^@\" "+ PATH + genome_a_Variety + "_" + genome_b_Variety + ".2" + ".anchorwave.sam"+" >> "+ PATH + genome_a_Variety + "_" + genome_b_Variety + ".3" + ".anchorwave.sam")
 
     elif((genome_a not in fasta)and(genome_b  in fasta)):
-        print("anchorwave gff2seq -i " + PATH + gffnstr+ "   -r " + PATH +genome_a+".ref" + "  -o " + genome_a_Variety+"_cds.fa")
-        print("minimap2 "+minimap2Paramters + PATH + genome_b +"  "+ genome_a_Variety + "_cds.fa > " + genome_b_Variety + "_" + genome_a_Variety + "_cds.sam")
-        print("minimap2 "+minimap2Paramters + PATH + genome_a +".ref"+ "  " + genome_a_Variety + "_cds.fa > " + genome_a_Variety + "_" + genome_a_Variety + "_ref.sam")
-        print("/usr/bin/time anchorwave proali -i " + PATH + gffnstr + " -as " + genome_a_Variety + "_cds.fa  " + " -r " + PATH + genome_a + ".ref" + " -a " + genome_b_Variety + "_" + genome_a_Variety + "_cds.sam " + " -ar " + genome_a_Variety + "_" + genome_a_Variety + "_ref.sam" + " -s " + PATH + genome_b + " -n " + PATH + genome_a_Variety + "_" + genome_b_Variety + ".anchors" \
+        print("anchorwave gff2seq -i " + PATH + gffnstr+ "   -r " + PATH +genome_a+".ref" + "  -o " +PATH+  genome_a_Variety+"_cds.fa")
+        print("minimap2 "+minimap2Paramters + PATH + genome_b +"  "+          genome_a_Variety + "_cds.fa > " + PATH+ genome_b_Variety + "_" + genome_a_Variety + "_cds.sam")
+        print("minimap2 "+minimap2Paramters + PATH + genome_a +".ref"+ "  " + genome_a_Variety + "_cds.fa > " + PATH+ genome_a_Variety + "_" + genome_a_Variety + "_ref.sam")
+        print("/usr/bin/time anchorwave proali -i " + PATH + gffnstr + " -as " + PATH+ genome_a_Variety + "_cds.fa  " + " -r " + PATH + genome_a + ".ref" + " -a " +PATH+  genome_b_Variety + "_" + genome_a_Variety + "_cds.sam " + " -ar " +PATH+  genome_a_Variety + "_" + genome_a_Variety + "_ref.sam" + " -s " + PATH + genome_b + " -n " + PATH + genome_a_Variety + "_" + genome_b_Variety + ".anchors" \
             + " -o " + PATH + genome_a_Variety + "_" + genome_b_Variety + ".anchorwave.maf" + " -f " + PATH + genome_a_Variety + "_" + genome_b_Variety + ".anchorwave.f.maf" + proaliParamters+"> " + genome_a_Variety + "_" + genome_b_Variety + ".avx2.log 2>&1")
         print("maf-convert sam " + PATH + genome_a_Variety + "_" + genome_b_Variety + ".anchorwave.maf" + "  > " + PATH + genome_a_Variety + "_" + genome_b_Variety + ".2" + ".anchorwave.sam")
         print("samtools view -H --reference " + PATH + genome_a + ".ref  " + PATH + genome_a_Variety + "_" + genome_b_Variety + ".2" + ".anchorwave.sam" + " > " + PATH + genome_a_Variety + "_" + genome_b_Variety + ".3" + ".anchorwave.sam")
         print("grep -v \"^@\" "+ PATH + genome_a_Variety + "_" + genome_b_Variety + ".2" + ".anchorwave.sam"+" >> "+ PATH + genome_a_Variety + "_" + genome_b_Variety + ".3" + ".anchorwave.sam")
 
     else:
-        print("anchorwave gff2seq -i " + PATH + gffnstr + "   -r " + PATH + genome_a + ".ref" + "  -o " + genome_a_Variety + "_cds.fa")
-        print("minimap2 "+minimap2Paramters + PATH + genome_b + ".ref " + genome_a_Variety + "_cds.fa > " + genome_b_Variety + "_" + genome_a_Variety + "_cds.sam")
-        print("minimap2 "+minimap2Paramters + PATH + genome_a + ".ref" + "  " + genome_a_Variety + "_cds.fa > " + genome_a_Variety + "_" + genome_a_Variety + "_ref.sam")
-        print("/usr/bin/time anchorwave proali -i " + PATH + gffnstr  + " -as " + genome_a_Variety + "_cds.fa  " + " -r " + PATH + genome_a+".ref" + " -a " + genome_b_Variety + "_" + genome_a_Variety + "_cds.sam " +" -ar " + genome_a_Variety + "_" + genome_a_Variety + "_ref.sam" + " -s " + PATH + genome_b +".ref"+ " -n " + PATH +genome_a_Variety+"_"+genome_b_Variety + ".anchors" \
+        print("anchorwave gff2seq -i " + PATH + gffnstr + "   -r " + PATH + genome_a + ".ref" + "  -o " + PATH+ genome_a_Variety + "_cds.fa")
+        print("minimap2 "+minimap2Paramters + PATH + genome_b + ".ref " +       genome_a_Variety + "_cds.fa > " +PATH+  genome_b_Variety + "_" + genome_a_Variety + "_cds.sam")
+        print("minimap2 "+minimap2Paramters + PATH + genome_a + ".ref" + "  " + genome_a_Variety + "_cds.fa > " +PATH+  genome_a_Variety + "_" + genome_a_Variety + "_ref.sam")
+        print("/usr/bin/time anchorwave proali -i " + PATH + gffnstr  + " -as " +PATH+  genome_a_Variety + "_cds.fa  " + " -r " + PATH + genome_a+".ref" + " -a " +PATH+  genome_b_Variety + "_" + genome_a_Variety + "_cds.sam " +" -ar " + PATH+ genome_a_Variety + "_" + genome_a_Variety + "_ref.sam" + " -s " + PATH + genome_b +".ref"+ " -n " + PATH +genome_a_Variety+"_"+genome_b_Variety + ".anchors" \
               + " -o " + PATH +genome_a_Variety+"_"+genome_b_Variety +".anchorwave.maf" + " -f " + PATH +genome_a_Variety+"_"+genome_b_Variety+ ".anchorwave.f.maf"+proaliParamters+" > " +genome_a_Variety+"_"+genome_b_Variety+".avx2.log 2>&1")
         print("maf-convert sam " + PATH + genome_a_Variety + "_" + genome_b_Variety + ".anchorwave.maf" + "  > " + PATH + genome_a_Variety + "_" + genome_b_Variety + ".2" + ".anchorwave.sam")
         print("samtools view -H --reference " + PATH + genome_a + ".ref  " + PATH + genome_a_Variety + "_" + genome_b_Variety + ".2" + ".anchorwave.sam" + " > " + PATH + genome_a_Variety + "_" + genome_b_Variety + ".3" + ".anchorwave.sam")
         print("grep -v \"^@\" "+ PATH + genome_a_Variety + "_" + genome_b_Variety + ".2" + ".anchorwave.sam"+" >> "+ PATH + genome_a_Variety + "_" + genome_b_Variety + ".3" + ".anchorwave.sam")
-    print("k8 /data/paftools.js   sam2paf " + PATH +genome_a_Variety+"_"+genome_b_Variety +".3"+".anchorwave.sam" + " > "+ PATH +genome_a_Variety+"_"+genome_b_Variety +".tmp.anchorwave.paf")
+    print("k8 /data/workflow/envs/paftools.js  sam2paf " + PATH +genome_a_Variety+"_"+genome_b_Variety +".3"+".anchorwave.sam" + " > "+ PATH +genome_a_Variety+"_"+genome_b_Variety +".tmp.anchorwave.paf")
     for (genome, seq) in input_seq_map.items():
             global replacenamea
             global replacenameb
@@ -280,7 +282,7 @@ def make_chunked_alignments( event_a, genome_a, event_b, genome_b, distance, par
     if genome_b_Variety in ancestor:
         replacenameb = genome_b_Variety
     if genome_a_Variety and genome_b_Variety:
-            print("python /data/replace_ref_que.py -i " + PATH + genome_a_Variety + "_" + genome_b_Variety + ".tmp.anchorwave.paf" + " -o " + PATH + genome_a_Variety + "_" + genome_b_Variety + ".anchorwave.paf" + " -r " + replacenamea+" -q " +replacenameb)
+            print("python /data/workflow/scripts/replace_ref_que.py -i " + PATH + genome_a_Variety + "_" + genome_b_Variety + ".tmp.anchorwave.paf" + " -o " + PATH + genome_a_Variety + "_" + genome_b_Variety + ".anchorwave.paf" + " -r " + replacenamea+" -q " +replacenameb)
     # print( "python replace_ref_que.py -i " + PATH + genome_a_Variety + "_" + genome_b_Variety + ".tmp.anchorwave.paf" + " -o " + PATH + genome_a_Variety + "_" + genome_b_Variety + ".anchorwave.paf" + " -r " + genome_a_Variety + "_protein" + " -q " + genome_b_Variety + "_protein")
 
 
@@ -299,9 +301,9 @@ def cactus_cons_with_resources(spanning_tree, event, config_node, subtree_eventm
     print("grep -v tp:A:S "+PATH+'subtree'+str(i)+"/anchorwave_tile.paf"+ " > "+ PATH + str(ancestorevent) + "_primary.paf || true")
     print("grep  tp:A:S "  +PATH+'subtree'+str(i)+"/anchorwave_tile.paf"+ "> " + PATH  +str(ancestorevent) + "_secondary.paf || true")
     if(outgroups==[]):
-        print("cactus_consolidated --sequences " +"\" "+" ".join([item for tmpdict in pairs for item in tmpdict])+ " \" "+" --speciesTree " +" \" "+ event_tree_str+ "\""+" --logLevel DEBUG --alignments  " + PATH + str(ancestorevent) + "_primary.paf "+ "  --params  "+ xmlPath+ " --outputFile " +PATH+ ancestorevent + ".c2h " + " --outputHalFastaFile " +PATH+ ancestorevent + ".c2h.fa"+ " --outputReferenceFile " +PATH+ ancestorevent+ ".ref"+" ".join(outgroups)+ " --referenceEvent " + ancestorevent+" "+Cactus_threads+ " --secondaryAlignments " +PATH + str(ancestorevent) + "_secondary.paf")
+        print("cactus_consolidated --sequences " +"\" "+" ".join([item for tmpdict in pairs for item in tmpdict])+ " \" "+" --speciesTree " +" \" "+ event_tree_str+ "\""+" --logLevel DEBUG --alignments  " + PATH + str(ancestorevent) + "_primary.paf "+ "  --params "+ xmlPath+ " --outputFile " +PATH+ ancestorevent + ".c2h " + " --outputHalFastaFile " +PATH+ ancestorevent + ".c2h.fa"+ " --outputReferenceFile " +PATH+ ancestorevent+ ".ref"+" ".join(outgroups)+ " --referenceEvent " + ancestorevent+" "+Cactus_threads+ " --secondaryAlignments " +PATH + str(ancestorevent) + "_secondary.paf")
     else:
-        print("cactus_consolidated --sequences " +"\" "+" ".join([item for tmpdict in pairs for item in tmpdict])+ " \" "+" --speciesTree " +" \" "+ event_tree_str+ "\""+" --logLevel DEBUG --alignments  " + PATH + str(ancestorevent) + "_primary.paf "+ "  --params  "+ xmlPath+ " --outputFile " +PATH+ ancestorevent + ".c2h " + " --outputHalFastaFile " +PATH+ ancestorevent + ".c2h.fa"+ " --outputReferenceFile " +PATH+ ancestorevent+ ".ref" + " --outgroupEvents " +" ".join(outgroups)+ " --referenceEvent " + ancestorevent+ " "+Cactus_threads+ " --secondaryAlignments " +PATH + str(ancestorevent) + "_secondary.paf")
+        print("cactus_consolidated --sequences " +"\" "+" ".join([item for tmpdict in pairs for item in tmpdict])+ " \" "+" --speciesTree " +" \" "+ event_tree_str+ "\""+" --logLevel DEBUG --alignments  " + PATH + str(ancestorevent) + "_primary.paf "+ "  --params "+ xmlPath+ " --outputFile " +PATH+ ancestorevent + ".c2h " + " --outputHalFastaFile " +PATH+ ancestorevent + ".c2h.fa"+ " --outputReferenceFile " +PATH+ ancestorevent+ ".ref" + " --outgroupEvents " +" ".join(outgroups)+ " --referenceEvent " + ancestorevent+ " "+Cactus_threads+ " --secondaryAlignments " +PATH + str(ancestorevent) + "_secondary.paf")
     pattern=f"\(([^(]*){ancestorevent}"
     haltree=re.search(pattern,event_tree_str)
     if(outgroups==[]):
@@ -358,9 +360,9 @@ def main(xml,evolverMammals,snakemakePath,snakemakeFasta,snakemakeGff,uniqueCds,
     global genoaliParamters
     global input_seq_map
     global Cactus_threads
-    xmlPath="/"+xml
-    PATH=snakemakePath
-    uniquePath="/"+uniqueCds
+    xmlPath="/data/"+xml
+    PATH="/data/"+snakemakePath
+    uniquePath="/data/"+uniqueCds
     fasta=snakemakeFasta.split(',')
     gff=snakemakeGff.split(',')
     fastaVariety=sVariety.split(',')
@@ -444,5 +446,19 @@ def main(xml,evolverMammals,snakemakePath,snakemakeFasta,snakemakeGff,uniqueCds,
 
 
 if __name__ == '__main__':
+    parser = argparse.ArgumentParser(description='ACMGA required parameters')
+    parser.add_argument('--xml',type=str,help='Cactus runs the required xml')
+    parser.add_argument('--tree',type=str,help='A guide tree tuns a progressive algorithm')
+    parser.add_argument('--path',type=str,help='Path of FASTA and GFF files, as well as non-duplicate CDS data')
+    parser.add_argument('--fasta',help='Collection of input FASTA file names')
+    parser.add_argument('--gff',help='Collection of input gff and ancestor gff file names')
+    parser.add_argument('--nonDuplicateCDS',type=str,help='Collection of non-duplicate CDS for input genomes')
+    parser.add_argument('--species',type=str,help='Species names corresponding to FASTA and GFF files')
+    parser.add_argument('--minimap2ForGff', type=str,help='Parameter settings for minimap2 in ACMGA to liftover ancestor.fa')
+    parser.add_argument('--minimap2Paramters',type=str,help='Parameter settings for minimap2 in ACMGA using AnchorWave')
+    parser.add_argument('--proaliParamters',type=str,help='Parameter settings for proali using AnchorWave in ACMGA')
+    parser.add_argument('--genoaliParamters',type=str,help='Parameter settings for genoali using AnchorWave in ACMGA')
+    parser.add_argument('--cactus_threads',type=str,help='Number of threads used in the cactus')
+    args = parser.parse_args()
 
-    main(sys.argv[1],sys.argv[2],sys.argv[3],sys.argv[4],sys.argv[5],sys.argv[6],sys.argv[7],sys.argv[8],sys.argv[9],sys.argv[10],sys.argv[11],sys.argv[12])
+    main(args.xml,args.tree,args.path,args.fasta,args.gff,args.nonDuplicateCDS,args.species,args.minimap2ForGff,args.minimap2Paramters,args.proaliParamters,args.genoaliParamters,args.cactus_threads)

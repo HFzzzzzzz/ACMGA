@@ -1,30 +1,28 @@
 
-configfile: "config/config.yaml"
+#configfile: "config/config.yaml"
 singularity: "docker://mgatools/acmga:1.0"
 
 rule anchor:
-    # output:
-    #     '../results/evelover.hal'
     params:
         xml = config["XML"],
         tree = config["Tree"],
         path = config["PATH"],
         fasta = ','.join(config["fasta"]),
         gff = ','.join(config["gff"]),
-        unique=config["uniqueCds"],
+        nonDuplicateCDS=config["nonDuplicateCDS"],
         species=','.join(config["species"]),
-        # ancestor=','.join(config['ancestor']),
         minimap2ForGff=config['minimap2ForGff'],
         minimap2Paramters=config['minimap2Paramters'],
         proaliParamters=config['proaliParamters'],
         genoaliParamters=config['genoaliParamters'],
-        cactusParamters=config['cactus_threads']
+        cactus_threads=config['cactus_threads']
 
     shell:
         """
-        ./workflow/scripts/ACMGAPipeline.py {params.xml} {params.tree} {params.path} {params.fasta} {params.gff} {params.unique} {params.species}  "{params.minimap2ForGff}" "{params.minimap2Paramters}" "{params.proaliParamters}" "{params.genoaliParamters}" "{params.cactusParamters}" > data/command.sh 
+        ./workflow/scripts/ACMGAPipeline.py --xml {params.xml} --tree {params.tree} --path {params.path} --fasta {params.fasta} --gff {params.gff} --nonDuplicateCDS {params.nonDuplicateCDS} --species {params.species}  --minimap2ForGff "{params.minimap2ForGff}" --minimap2Paramters "{params.minimap2Paramters}" --proaliParamters "{params.proaliParamters}" --genoaliParamters "{params.genoaliParamters}" --cactus_threads "{params.cactus_threads}" > command.sh
         """
 
+    #./workflow/scripts/ACMGAPipeline.py {params.xml} {params.tree} {params.path} {params.fasta} {params.gff} {params.nonDuplicateCDS} {params.species}  "{params.minimap2ForGff}" "{params.minimap2Paramters}" "{params.proaliParamters}" "{params.genoaliParamters}" "{params.cactusParamters}" > data/command.sh
 
 
 
