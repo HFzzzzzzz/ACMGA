@@ -105,7 +105,7 @@ cd ..
 ```
 ### 3、Generating `command.sh`
 ```
-snakemake  -j 5 --configfile config/config.yaml   --use-singularity  --singularity-args "-B  $(pwd)"`
+snakemake  -j 5 --configfile config/config.yaml   --use-singularity  --singularity-args "-B  $(pwd)"
 ```
 ### 4、Running `command.sh`
 ```
