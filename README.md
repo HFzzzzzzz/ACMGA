@@ -31,7 +31,7 @@ pip install biopython
 
 Using this approach, slight modifications to some of the paths within `command.sh` are necessary.
 ### Using the Docker image:
-ACMGA currently relies on Snakemake (>6.0.0), Docker, and Singularity. Please make sure these dependencies are installed before running ACMGA. We strongly recommend using this approach.
+ACMGA currently relies on Snakemake (>6.0.0), Docker, and Singularity. Please make sure these dependencies are installed before running ACMGA. We recommend using this approach.
 
 
 
