@@ -2,7 +2,7 @@
 
 # ACMGA
 
-ACMGA is a reference-free multiple-genome alignment pipeline. The simplified schema of the pipeline is shown below.
+AnchorWave-Cactus Multiple Genome Alignment (ACMGA) is a reference-free multiple-genome alignment pipeline. The simplified schema of the pipeline is shown below.
 ![ACMGA](https://github.com/HFzzzzzzz/ACMGA/raw/master/workflow/image/schematic.jpg)
 
 
