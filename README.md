@@ -4,8 +4,9 @@
 
 # ACMGA
 
-AnchorWave-Cactus Multiple Genome Alignment (ACMGA) is a reference-free multiple-genome alignment pipeline. The simplified schema of the pipeline is shown below.
+AnchorWave-Cactus Multiple Genome Alignment (ACMGA) is a reference-free multiple-genome alignment pipeline. It uses AnchorWave for pairwise genome alignment, a tool based on collinearity and global alignment algorithms. This tool is hihly effective in aligning repetitive sequence regions and identifying long INDELs(>50bp). Additionally, ACMGA draws on the advantages of Progressive Cactus for generating ancestor sequences and implementing progressive strategies. ACMGA  is effective in aligning plant genomes that are enriched with repetitive sequences. The simplified schema of the pipeline is shown below.
 ![ACMGA](https://github.com/HFzzzzzzz/ACMGA/raw/master/workflow/image/schematic.jpg)
+
 
 
 
@@ -14,11 +15,12 @@ AnchorWave-Cactus Multiple Genome Alignment (ACMGA) is a reference-free multiple
 # Building Environment
 ACMGA requires Python version 3.10 along with Biopython libraries. If you did not install have Biopython, please ensure to install it.
 ```
+pip install python3.10
 pip install biopython
 ```
 ## ACMGA supports building the environment either locally or using the Docker image.
 ### Building the local environment:
-- python3.10
+
 - [Snakemake(>6.0)](https://snakemake.readthedocs.io/en/stable/getting_started/installation.html)
 - [AnchorWave](https://github.com/baoxingsong/AnchorWave)
 - [Cactus](https://github.com/ComparativeGenomicsToolkit/cactus)
@@ -35,51 +37,7 @@ Using this approach, slight modifications to some of the paths within `command.s
 ### Using the Docker image:
 ACMGA currently relies on Snakemake (>6.0.0), Docker, and Singularity. Please make sure these dependencies are installed before running ACMGA. We recommend using this approach.
 
-
-
-# Quickstart
-For a quickstart with your own data, you can follow the instructions below. We recommend testing the pipeline with our test data first (see section [**Testing the pipeline**](#section2)), to ensure the pipeline will work correctly.
-
-To get started, clone this repository.
-```
-git clone https://github.com/HFzzzzzzz/ACMGA.git
-```
-You can now prepare the run with the pipeline by doing the following:
- 1.  Placing your FASTA sequences, Gff files (suffixed with  `.gff3`), and a  guide tree  into  `ACMGA/data`.
- 2.  Placing the CDS sequences set from all the input genomes into `ACMGA/data`.
- 3.  For example
- 
-	 3.1 Copying  `ACMGA/config/config.yaml` to `ACMGA/config/myconfig.yaml` 
-	 
-	 3.2 Editing the `ACMGA/config/myconfig.yaml` to include :
-	 
-		-  Input FASTA sequences name (parameter  `fasta:` ).
-		-  Input GFF files name and ancestral GFF files name (parameter  `gff3:` ).
-		-  Path for the collection of CDS (parameter `nonDuplicateCDS:` ), using this [script](https://github.com/HFzzzzzzz/ACMGA/blob/master/workflow/scripts/CombineCDS.py) to merge CDS files and obtain `non_duplicate_CDS.fa`.
-		-  Path of the FASTA and the GFF files (parameter  `path:` ).
-		-  Species name (parameter  `species:` ).
-		-  Ancestors name (parameter `ancestor:` ).
-		-  Path of guide tree (parameter `Tree:` ), generated using recommended [steps](#section1).
-
-
-
-The pipeline can then be executed from the  `ACMGA/`  directory in two steps.
-
-1.The first step generates the `command.sh` script in the `ACMGA/` 
-```
-cd ACMGA
-snakemake  -j 5 --configfile config/myconfig.yaml   --use-singularity  --singularity-args "-B $(pwd)"
-```
-
-2.The second step is to enter the docker environment and run `command.sh`
-
-```
-docker login
-docker run -v $(pwd):/data --rm -it mgatools/acmga:1.0
-sh command.sh
-```
-
-# <a name="section2">Testing the pipeline</a>
+# Testing the pipeline
 ## Building Environment using Docker
 
 ### 1、Create a conda environment named "acmga" with Python 3.10 and Snakemake
@@ -117,6 +75,48 @@ docker login
 docker run -v $(pwd):/data --rm -it mgatools/acmga:1.0
 sh command.sh
 ```
+
+# Quickstart
+For a quickstart with your own data, you can follow the instructions below. We recommend testing the pipeline with our test data first to ensure the pipeline will work correctly.
+
+After testing the pipeline, the environment has been build successfully. Now you just need to prepare your own data and modify the configuration yaml file to run multiple genome alignment on your own data.
+
+You can now prepare the run with the pipeline by doing the following:
+ 1.  Placing your FASTA sequences, Gff files (suffixed with  `.gff3`), and a  guide tree  into  `ACMGA/data`.
+ 2.  Placing the CDS sequences set from all the input genomes into `ACMGA/data`.
+ 3.  For example
+ 
+	 3.1 Copying  `ACMGA/config/config.yaml` to `ACMGA/config/myconfig.yaml` 
+	 
+	 3.2 Editing the `ACMGA/config/myconfig.yaml` to include :
+	 
+		-  Input FASTA sequences name (parameter  `fasta:` ).
+		-  Input GFF files name and ancestral GFF files name (parameter  `gff3:` ).
+		-  Path for the collection of CDS (parameter `nonDuplicateCDS:` ), using this [script](https://github.com/HFzzzzzzz/ACMGA/blob/master/workflow/scripts/CombineCDS.py) to merge CDS files and obtain `non_duplicate_CDS.fa`.
+		-  Path of the FASTA and the GFF files (parameter  `path:` ).
+		-  Species name (parameter  `species:` ).
+		-  The name of the ancestor sequence (parameter `ancestor:` ).
+		-  Path of guide tree (parameter `Tree:` ), generated using recommended [steps](#section1).
+
+
+
+The pipeline can then be executed from the  `ACMGA/`  directory in two steps.
+
+1.The first step generates the `command.sh` script in the `ACMGA/` 
+```
+cd ACMGA
+snakemake  -j 5 --configfile config/myconfig.yaml   --use-singularity  --singularity-args "-B $(pwd)"
+```
+
+2.The second step is to enter the docker environment and run `command.sh`
+
+```
+docker login
+docker run -v $(pwd):/data --rm -it mgatools/acmga:1.0
+sh command.sh
+```
+
+
  # <a name="section1">Generating a guide tree</a>
  ## 1、Use the [GEAN](https://github.com/baoxingsong/GEAN) tool to generate protein sequences by inputting FASTA, GFF files, and corresponding CDS and gene sequence files
 ```
