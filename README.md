@@ -31,7 +31,7 @@ pip install biopython
 - [genePredToGtf](https://github.com/ENCODE-DCC/kentUtils/tree/master/src/hg/genePredToGtf)
 - [gffread](https://github.com/gpertea/gffread)
 - [K8](https://github.com/attractivechaos/k8)
-- [last](https://github.com/UCSantaCruzComputationalGenomicsLab/last/tree/master)
+- [maf-convert](https://gitlab.com/mcfrith/last/-/blob/main/bin/maf-convert)
 
 Using this approach, slight modifications to some of the paths within `command.sh` are necessary.
 ### Using the Docker image:
