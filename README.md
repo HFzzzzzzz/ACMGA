@@ -1,3 +1,5 @@
+
+
  
 
 # ACMGA
@@ -51,19 +53,19 @@ You can now prepare the run with the pipeline by doing the following:
 	 
 	 3.2 Editing the `ACMGA/config/myconfig.yaml` to include :
 	 
-	-  Input FASTA sequences name (parameter  `fasta:` ).
-	-  Input GFF file name and ancestral GFF file name (parameter  `gff3:` ).
-	-  Path for the collection of CDS (parameter `nonDuplicateCDS:` ), using this [script](https://github.com/HFzzzzzzz/ACMGA/blob/master/workflow/scripts/CombineCDS.py) to merge CDS files and obtain `non_duplicate_CDS.fa`.
-	-  Path of the FASTA and the GFF files (parameter  `path:` ).
-	-  Species name (parameter  `species:` ).
-	-  Ancestor name (parameter `ancestor:` ).
-	-  Path of guide tree (parameter `Tree:` ), generated using recommended [steps](#section1).
+		-  Input FASTA sequences name (parameter  `fasta:` ).
+		-  Input GFF files name and ancestral GFF files name (parameter  `gff3:` ).
+		-  Path for the collection of CDS (parameter `nonDuplicateCDS:` ), using this [script](https://github.com/HFzzzzzzz/ACMGA/blob/master/workflow/scripts/CombineCDS.py) to merge CDS files and obtain `non_duplicate_CDS.fa`.
+		-  Path of the FASTA and the GFF files (parameter  `path:` ).
+		-  Species name (parameter  `species:` ).
+		-  Ancestors name (parameter `ancestor:` ).
+		-  Path of guide tree (parameter `Tree:` ), generated using recommended [steps](#section1).
 
 
 
 The pipeline can then be executed from the  `ACMGA/`  directory in two steps.
 
-1.The first step generates the `command.sh` script in the data file
+1.The first step generates the `command.sh` script in the `ACMGA/` 
 ```
 cd ACMGA
 snakemake  -j 5 --configfile config/myconfig.yaml   --use-singularity  --singularity-args "-B $(pwd)"
@@ -92,7 +94,7 @@ mamba create -c conda-forge -c bioconda -n acmga python=3.10 snakemake
  - [Docker installation guide](https://docs.docker.com/engine/install/ubuntu/)
 
 ## Running ACMGA
-To test the pipeline before running on your own data, you can align some Arabidopsis sequences. 
+To test the pipeline before running on your own data, you can align some Arabidopsis genomes. 
 ### 1、Download the code and activate the environment
 ```
 git clone https://github.com/HFzzzzzzz/ACMGA.git
@@ -137,17 +139,17 @@ OrthoFinder/orthofinder -f OrthoFinder/ExampleData
 Intermediate results of ACMGA are written to the `data` directory or subdirectories with outputs from different steps of the pipeline. The final output, the multiple genome alignment result, is saved as `result/evolverPlants.hal`.
 
 # HAL Calling Vairants 
-Refer to this [document](https://github.com/HFzzzzzzz/ACMGA/blob/master/result/README.md) for calling SNPs and INDELs in the HAL file. Additionally, you have the flexibility to perform further analysis using alternative methods. The Cactus software provides support for various extensions.
+Refer to this [document](https://github.com/HFzzzzzzz/ACMGA/blob/master/result/README.md) for calling SNPs and INDELs in the HAL file. Additionally, you have the flexibility to perform further analysis using alternative methods. The Cactus toolkit provides support for various extensions.
 
 # Troubleshooting
 
 ## Common errors
 #### Input file errors
-When the snakemake run terminates with an error despite Snakemake (version > 6.0.0) being correctly installed, there are several common causes related to input files:
+When the Snakemake run terminates with an error despite Snakemake (version > 6.0.0) being correctly installed, there are several common causes related to input files:
 
--   Input FASTA files and GFF files in the data/ directory do not matching samples listed in the config file parameters  `species`.
--   Input FASTA files and GFF files having chromosomes/scaffolds with special characters; ideally, use names consisting of alphanumeric characters only,such as `chr1`.
--   The config.yaml ancestor parameters not being sufficient. Set the number to your ancestor nodesl; if unsure of the exact count of ancestor nodes, then set as many as possible within the maximum range (N0-N(2^(k-1)-1), where k
+-   Input FASTA files and GFF files in the `data/` directory do not matching samples listed in the config file parameters  `species`.
+-   Input FASTA files and GFF files having chromosomes/scaffolds with special characters; ideally, use names consisting of alphanumeric characters only, such as `chr1`.
+-   The config.yaml ancestor parameters not being sufficient. Set the number to your ancestor node; if unsure of the exact count of ancestor nodes, then set as many as possible within the maximum range (N0-N(2^(k-1)-1), where k
     is the depth of the guide tree), to avoid the error of insufficient ancestor nodes.
 - If the test case fails, please check for incomplete data downloads due to network problems.
 
