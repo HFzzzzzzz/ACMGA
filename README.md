@@ -17,6 +17,9 @@ ACMGA requires Python version 3.10 along with Biopython libraries. If you did no
 ```
 pip install biopython
 ```
+### Using the Docker image:
+ACMGA currently relies on Snakemake (>6.0.0), Docker, and Singularity. Please make sure these dependencies are installed before running ACMGA. We recommend using this approach.
+
 ## ACMGA supports building the environment either locally or using the Docker image.
 ### Building the local environment:
 - python3.10
@@ -33,8 +36,6 @@ pip install biopython
 - [maf-convert](https://gitlab.com/mcfrith/last/-/blob/main/bin/maf-convert)
 
 Using this approach, slight modifications to some of the paths within `command.sh` are necessary, give the software executable permissions, and add the path of the executable program to the `PATH`.
-### Using the Docker image:
-ACMGA currently relies on Snakemake (>6.0.0), Docker, and Singularity. Please make sure these dependencies are installed before running ACMGA. We recommend using this approach.
 
 # Testing the pipeline
 ## Building Environment using Docker
