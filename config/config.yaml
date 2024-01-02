@@ -9,13 +9,11 @@
 
 #Collection of input fasta file names.
 fasta:
-  ['Sha.chr.all.v2.0.fasta',
-   'Kyo.chr.all.v2.0.fasta',
+  [
+  
    'An-1.chr.all.v2.0.fasta',
    'Cvi.chr.all.v2.0.fasta',
-   'C24.chr.all.v2.0.fasta',
    'Arabidopsis_thaliana.TAIR10.dna.toplevel.fa',
-   'Eri.chr.all.v2.0.fasta',
    'Ler.chr.all.v2.0.fasta'
   ]
 
@@ -23,20 +21,12 @@ fasta:
 #2、Collection of gff file names for the ancestral sequence (N0.gff~N∞.gff) ( with the .gff suffix).
 gff:
   ['Cvi.protein-coding.genes.v2.5.2019-10-09.gff3',
-   'Eri.protein-coding.genes.v2.5.2019-10-09.gff3',
-   'Kyo.protein-coding.genes.v2.5.2019-10-09.gff3',
    'An-1.protein-coding.genes.v2.5.2019-10-09.gff3',
-   'C24.protein-coding.genes.v2.5.2019-10-09.gff3',
-   'Sha.protein-coding.genes.v2.5.2019-10-09.gff3',
    'Ler.protein-coding.genes.v2.5.2019-10-09.gff3',
    'Arabidopsis_thaliana.TAIR10.56.gff3',
    'N0.gff',
    'N1.gff',
    'N2.gff',
-   'N3.gff',
-   'N4.gff',
-   'N5.gff',
-   'N6.gff',
   ]
 
 # fsata and gff species name
@@ -44,11 +34,7 @@ gff:
 species:
   [
        'Cvi',
-       'Eri',
-       'Kyo',
        'An-1',
-       'C24',
-       'Sha',
        'Ler',
        'Arabidopsis_thaliana',
   ]
