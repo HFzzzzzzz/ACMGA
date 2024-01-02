@@ -28,7 +28,7 @@ sed -i 's/^>\([0-9]*\).*/>chr\1/g' Arabidopsis_thaliana.TAIR10.dna.toplevel.fa
 sed -i 's/^\([0-9]*\)/chr\1/g' Arabidopsis_thaliana.TAIR10.56.gff3
 cp *.CDS.fasta  CDS
 cp ../../workflow/scripts/CombineCDS.py CDS
-python CDS/CombineCDS.py > ./non_duplicate_CDS.fa
+python CDS/CombineCDS.py > ../non_duplicate_CDS.fa
 
 awk -i inplace '/^>chr[1-5]/{p=1; print; next} p && /^>/{exit} p' An-1.chr.all.v2.0.fasta
 awk -i inplace '/^>chr[1-5]/{p=1; print; next} p && /^>/{exit} p' Cvi.chr.all.v2.0.fasta
