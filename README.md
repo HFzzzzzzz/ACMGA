@@ -1,10 +1,6 @@
-
-
- 
-
 # ACMGA
 
-AnchorWave-Cactus Multiple Genome Alignment (ACMGA) is a reference-free multiple-genome alignment pipeline. It leverages the power of AnchorWave, a pairwise genome alignment tool that utilizes collinearity and global alignment algorithms. This enables ACMGA to effectively align repetitive sequence regions and accurately identify long INDELs (>50bp). Moreover, ACMGA incorporates the Progressive Cactus algorithm to generate ancestor sequences and implement progressive strategies. This combination of techniques makes ACMGA particularly well-suited for aligning plant genomes that are enriched with repetitive sequences. The simplified schema of the pipeline is depicted below.
+AnchorWave-Cactus Multiple Genome Alignment (ACMGA) is a reference-free multiple-genome alignment pipeline combining AnchorWave with Cactus. AnchorWave is a pairwise genome alignment tool that utilizes collinearity and 2-piece affine gap cost global alignment algorithms. This enables ACMGA to effectively align repetitive genomic regions and accurately identify long INDELs (>50bp). ACMGA incorporates the Progressive Cactus algorithm to generate ancestor sequences and conduct multiple genome alignment. This combination makes ACMGA particularly well-suited for aligning plant genomes enriched with repetitive sequence, with high sequence diversity and long INDELs.
 ![ACMGA](https://github.com/HFzzzzzzz/ACMGA/raw/master/workflow/image/schematic.jpg)
 
 
@@ -13,7 +9,7 @@ AnchorWave-Cactus Multiple Genome Alignment (ACMGA) is a reference-free multiple
 
 
 # Building Environment
-ACMGA requires Python version 3.10 along with Biopython libraries. If you did not install have Biopython, please ensure to install it. No matter which method you use, biopython and python3.10 must be installed.
+ACMGA requires Python version 3.10 along with Biopython libraries. No matter running ACMGA locally or with a container, python3.10 and biopython are required.
 ```
 pip install biopython
 ```
