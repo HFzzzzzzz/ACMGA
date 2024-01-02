@@ -29,7 +29,7 @@ pip install biopython
 - [bedtools](https://github.com/arq5x/bedtools2)
 - [bedToGenePred](https://github.com/ENCODE-DCC/kentUtils/tree/master/src/hg/bedToGenePred)
 - [genePredToGtf](https://github.com/ENCODE-DCC/kentUtils/tree/master/src/hg/genePredToGtf)
-- [gffread](https://github.com/gpertea/gffread)
+- [Gffread](https://github.com/gpertea/gffread)
 - [K8](https://github.com/attractivechaos/k8)
 - [maf-convert](https://gitlab.com/mcfrith/last/-/blob/main/bin/maf-convert)
 
