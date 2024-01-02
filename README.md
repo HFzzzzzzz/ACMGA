@@ -79,7 +79,7 @@ sh command.sh
 # Quickstart
 For a quickstart with your own data, you can follow the instructions below. We recommend testing the pipeline with our test data first to ensure the pipeline will work correctly.
 
-After testing the pipeline, the environment has been build successfully. Now you just need to prepare your own data and modify the configuration yaml file to run multiple genome alignment on your own data.
+After testing the pipeline, the environment has been build successfully. Now you just need to prepare your own data and modify the configuration `.yaml` file to run multiple genome alignment on your own data.
 
 You can now prepare the run with the pipeline by doing the following:
  1.  Placing your FASTA sequences, Gff files (suffixed with  `.gff3`), and a  guide tree  into  `ACMGA/data`.
