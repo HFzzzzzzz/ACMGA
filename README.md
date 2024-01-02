@@ -4,7 +4,7 @@
 
 # ACMGA
 
-AnchorWave-Cactus Multiple Genome Alignment (ACMGA) is a reference-free multiple-genome alignment pipeline. It uses AnchorWave for pairwise genome alignment, a tool based on collinearity and global alignment algorithms. This tool is hihly effective in aligning repetitive sequence regions and identifying long INDELs(>50bp). Additionally, ACMGA draws on the advantages of Progressive Cactus for generating ancestor sequences and implementing progressive strategies. ACMGA  is effective in aligning plant genomes that are enriched with repetitive sequences. The simplified schema of the pipeline is shown below.
+AnchorWave-Cactus Multiple Genome Alignment (ACMGA) is a reference-free multiple-genome alignment pipeline. It leverages the power of AnchorWave, a pairwise genome alignment tool that utilizes collinearity and global alignment algorithms. This enables ACMGA to effectively align repetitive sequence regions and accurately identify long INDELs (>50bp). Moreover, ACMGA incorporates the Progressive Cactus algorithm to generate ancestor sequences and implement progressive strategies. This combination of techniques makes ACMGA particularly well-suited for aligning plant genomes that are enriched with repetitive sequences. The simplified schema of the pipeline is depicted below.
 ![ACMGA](https://github.com/HFzzzzzzz/ACMGA/raw/master/workflow/image/schematic.jpg)
 
 
