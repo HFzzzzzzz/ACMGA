@@ -43,7 +43,6 @@ Using this approach, slight modifications to some of the paths within `command.s
 conda install -n base -c conda-forge mamba
 conda activate base
 mamba create -c conda-forge -c bioconda -n acmga python=3.10 snakemake
-pip install biopython
 ```
 ### 2、Install Docker and Singularity following the documentation instructions
 
@@ -56,6 +55,7 @@ To test the pipeline before running on your own data, you can align some Arabido
 ```
 git clone https://github.com/HFzzzzzzz/ACMGA.git
 conda activate acmga
+conda install -c conda-forge biopython
 ```
 
 ### 2、Download Arabidopsis data
