@@ -231,8 +231,8 @@ def make_chunked_alignments( event_a, genome_a, event_b, genome_b, distance, par
     gffnstr = gffname[0]
     if ((genome_a in fasta )and(genome_b not in fasta)):
         print("anchorwave gff2seq -i " + PATH + gffnstr+ "   -r " + PATH +genome_a + "  -o " + PATH+ genome_a_Variety+"_cds.fa")
-        print("minimap2  " +minimap2Paramters+ PATH + genome_b + ".ref " + genome_a_Variety + "_cds.fa > " + PATH+ genome_b_Variety + "_" + genome_a_Variety + "_cds.sam")
-        print("minimap2  " +minimap2Paramters+ PATH + genome_a + "  " + genome_a_Variety + "_cds.fa > "     +PATH+ genome_a_Variety + "_" + genome_a_Variety + "_ref.sam")
+        print("minimap2  " +minimap2Paramters+ PATH + genome_b + ".ref " + PATH+genome_a_Variety + "_cds.fa > "     +PATH+ genome_b_Variety + "_" + genome_a_Variety + "_cds.sam")
+        print("minimap2  " +minimap2Paramters+ PATH + genome_a + "  " +    PATH+genome_a_Variety + "_cds.fa > "     +PATH+ genome_a_Variety + "_" + genome_a_Variety + "_ref.sam")
         print("/usr/bin/time anchorwave proali -i " + PATH + gffnstr + " -as " + PATH+ genome_a_Variety + "_cds.fa  " + " -r " + PATH + genome_a + " -a " +PATH+  genome_b_Variety + "_" + genome_a_Variety + "_cds.sam " + " -ar " + PATH+ genome_a_Variety + "_" + genome_a_Variety + "_ref.sam" + " -s " + PATH + genome_b+".ref" + " -n " + PATH + genome_a_Variety + "_" + genome_b_Variety + ".anchors" \
             + " -o " + PATH + genome_a_Variety + "_" + genome_b_Variety + ".anchorwave.maf" + " -f " + PATH + genome_a_Variety + "_" + genome_b_Variety + ".anchorwave.f.maf" + proaliParamters+" > " + genome_a_Variety + "_" + genome_b_Variety + ".log 2>&1")
         print("maf-convert sam " + PATH + genome_a_Variety + "_" + genome_b_Variety + ".anchorwave.maf" + "  > " + PATH + genome_a_Variety + "_" + genome_b_Variety + ".2" + ".anchorwave.sam")
@@ -251,8 +251,8 @@ def make_chunked_alignments( event_a, genome_a, event_b, genome_b, distance, par
 
     elif((genome_a not in fasta)and(genome_b  in fasta)):
         print("anchorwave gff2seq -i " + PATH + gffnstr+ "   -r " + PATH +genome_a+".ref" + "  -o " +PATH+  genome_a_Variety+"_cds.fa")
-        print("minimap2 "+minimap2Paramters + PATH + genome_b +"  "+          genome_a_Variety + "_cds.fa > " + PATH+ genome_b_Variety + "_" + genome_a_Variety + "_cds.sam")
-        print("minimap2 "+minimap2Paramters + PATH + genome_a +".ref"+ "  " + genome_a_Variety + "_cds.fa > " + PATH+ genome_a_Variety + "_" + genome_a_Variety + "_ref.sam")
+        print("minimap2 "+minimap2Paramters + PATH + genome_b +"  "+          PATH+genome_a_Variety + "_cds.fa > " + PATH+ genome_b_Variety + "_" + genome_a_Variety + "_cds.sam")
+        print("minimap2 "+minimap2Paramters + PATH + genome_a +".ref"+ "  " + PATH+genome_a_Variety + "_cds.fa > " + PATH+ genome_a_Variety + "_" + genome_a_Variety + "_ref.sam")
         print("/usr/bin/time anchorwave proali -i " + PATH + gffnstr + " -as " + PATH+ genome_a_Variety + "_cds.fa  " + " -r " + PATH + genome_a + ".ref" + " -a " +PATH+  genome_b_Variety + "_" + genome_a_Variety + "_cds.sam " + " -ar " +PATH+  genome_a_Variety + "_" + genome_a_Variety + "_ref.sam" + " -s " + PATH + genome_b + " -n " + PATH + genome_a_Variety + "_" + genome_b_Variety + ".anchors" \
             + " -o " + PATH + genome_a_Variety + "_" + genome_b_Variety + ".anchorwave.maf" + " -f " + PATH + genome_a_Variety + "_" + genome_b_Variety + ".anchorwave.f.maf" + proaliParamters+"> " + genome_a_Variety + "_" + genome_b_Variety + ".avx2.log 2>&1")
         print("maf-convert sam " + PATH + genome_a_Variety + "_" + genome_b_Variety + ".anchorwave.maf" + "  > " + PATH + genome_a_Variety + "_" + genome_b_Variety + ".2" + ".anchorwave.sam")
@@ -261,8 +261,8 @@ def make_chunked_alignments( event_a, genome_a, event_b, genome_b, distance, par
 
     else:
         print("anchorwave gff2seq -i " + PATH + gffnstr + "   -r " + PATH + genome_a + ".ref" + "  -o " + PATH+ genome_a_Variety + "_cds.fa")
-        print("minimap2 "+minimap2Paramters + PATH + genome_b + ".ref " +       genome_a_Variety + "_cds.fa > " +PATH+  genome_b_Variety + "_" + genome_a_Variety + "_cds.sam")
-        print("minimap2 "+minimap2Paramters + PATH + genome_a + ".ref" + "  " + genome_a_Variety + "_cds.fa > " +PATH+  genome_a_Variety + "_" + genome_a_Variety + "_ref.sam")
+        print("minimap2 "+minimap2Paramters + PATH + genome_b + ".ref " +      PATH+ genome_a_Variety + "_cds.fa > " +PATH+  genome_b_Variety + "_" + genome_a_Variety + "_cds.sam")
+        print("minimap2 "+minimap2Paramters + PATH + genome_a + ".ref" + "  " +PATH+ genome_a_Variety + "_cds.fa > " +PATH+  genome_a_Variety + "_" + genome_a_Variety + "_ref.sam")
         print("/usr/bin/time anchorwave proali -i " + PATH + gffnstr  + " -as " +PATH+  genome_a_Variety + "_cds.fa  " + " -r " + PATH + genome_a+".ref" + " -a " +PATH+  genome_b_Variety + "_" + genome_a_Variety + "_cds.sam " +" -ar " + PATH+ genome_a_Variety + "_" + genome_a_Variety + "_ref.sam" + " -s " + PATH + genome_b +".ref"+ " -n " + PATH +genome_a_Variety+"_"+genome_b_Variety + ".anchors" \
               + " -o " + PATH +genome_a_Variety+"_"+genome_b_Variety +".anchorwave.maf" + " -f " + PATH +genome_a_Variety+"_"+genome_b_Variety+ ".anchorwave.f.maf"+proaliParamters+" > " +genome_a_Variety+"_"+genome_b_Variety+".avx2.log 2>&1")
         print("maf-convert sam " + PATH + genome_a_Variety + "_" + genome_b_Variety + ".anchorwave.maf" + "  > " + PATH + genome_a_Variety + "_" + genome_b_Variety + ".2" + ".anchorwave.sam")
