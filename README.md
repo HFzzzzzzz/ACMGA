@@ -33,7 +33,7 @@ pip install biopython
 - [K8](https://github.com/attractivechaos/k8)
 - [maf-convert](https://gitlab.com/mcfrith/last/-/blob/main/bin/maf-convert)
 
-Using this approach, slight modifications to some of the paths within `command.sh` are necessary, give the software executable permissions, and add the path of the executable program to the environment variable.
+Using this approach, slight modifications to some of the paths within `command.sh` are necessary, give the software executable permissions, and add the path of the executable program to the `PATH`.
 ### Using the Docker image:
 ACMGA currently relies on Snakemake (>6.0.0), Docker, and Singularity. Please make sure these dependencies are installed before running ACMGA. We recommend using this approach.
 
