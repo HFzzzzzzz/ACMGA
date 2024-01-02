@@ -13,7 +13,7 @@ AnchorWave-Cactus Multiple Genome Alignment (ACMGA) is a reference-free multiple
 
 
 # Building Environment
-## ACMGA supports building the environment either locally or using the Docker image.
+## ACMGA supports building the environment using the Docker image or locally.
 
 ### Using the Docker image:
 ACMGA currently relies on Snakemake (>6.0.0), Docker, and Singularity. Please make sure these dependencies are installed before running ACMGA. We recommend using this approach.
