@@ -13,10 +13,10 @@ AnchorWave-Cactus Multiple Genome Alignment (ACMGA) is a reference-free multiple
 - [Testing the pipeline](#section2)
 - [Quickstart](#section3)
 - [Please note](#section4)
-- [Generating a guide tree](#section5)
+- [Generat a guide tree](#section5)
 - [Explanation of Output files](#section6)
 - [HAL Calling Vairants](#section7)
-- [Troubleshooting](#section8)
+- [Troubleshoot](#section8)
 - [How to cite](#section9)
 
 
@@ -131,7 +131,7 @@ sh command.sh
 - Sequences that are not at the chromosome level can be removed, such as `scaf`.
 
 
- ## <a name="section5">Generating a guide tree</a>
+ ## <a name="section5">Generate a guide tree</a>
  ### 1、Use the [GEAN](https://github.com/baoxingsong/GEAN) tool to generate protein sequences by inputting FASTA, GFF files, and corresponding CDS and gene sequence files
 ```
 ./gean gff2seq -i /media/zhf/ext1/Downloads/gff/gff_chr1-5/Cvi.protein-coding.genes.v2.5.2019-10-09.gff3 -r /media/zhf/ext1/Downloads/fasta/fasta_chr1-5/Cvi.chr.all.v2.0.fasta -p /media/zhf/ext1/Downloads/protein/Cvi.protein.fa -c /media/zhf/ext1/Downloads/protein/Cvi.cds.fa -g /media/zhf/ext1/Downloads/protein/Cvi.gene.fa
@@ -155,7 +155,7 @@ Intermediate results of ACMGA are written to the `data` directory or subdirector
 ## <a name="section7">HAL Calling Vairants </a>
 Refer to this [document](https://github.com/HFzzzzzzz/ACMGA/blob/master/result/README.md) for calling SNPs and INDELs in the HAL file. Additionally, you have the flexibility to perform further analysis using alternative methods. The Cactus toolkit provides support for various extensions.
 
-## <a name="section8">Troubleshooting </a>
+## <a name="section8">Troubleshoot </a>
 
 ### Common errors
 When the Snakemake run terminates with an error despite Snakemake (version > 6.0.0) being correctly installed, there are several common causes related to input files:
