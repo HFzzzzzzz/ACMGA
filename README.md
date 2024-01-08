@@ -41,7 +41,7 @@ ACMGA currently relies on Snakemake (>6.0.0), Docker, and Singularity. Please ma
 - [K8](https://github.com/attractivechaos/k8)
 - [maf-convert](https://gitlab.com/mcfrith/last/-/blob/main/bin/maf-convert)
 
-Using this approach, slight modifications to some of the paths within `command.sh` are necessary(the path of the tools used in the pipeline and the path of the data used should be the same as the local), give the software executable permissions, and add the path of the executable program to the `PATH`.
+Using this approach, slight modifications to some of the paths (the path of the tools used in the pipeline and the path of the data used should be the same as the local) within `command.sh` are necessary, give the software executable permissions, and add the path of the executable program to the `PATH`.
 
 ## <a name="section2">Testing the pipeline</a>
 ### Building Environment using Docker
@@ -86,7 +86,7 @@ sh command.sh
 ## <a name="section3">Quickstart </a>
 For a quickstart with your own data, you can follow the instructions below. We recommend testing the pipeline with our test data first to ensure the pipeline will work correctly.
 
-After testing the pipeline, the environment has been build successfully. Now you just need to prepare your own data and modify the configuration `config.yaml` file to run multiple genome alignment on your own data.
+After testing the pipeline, the environment has been build successfully. Now you just need to prepare your own data and modify the configuration `myconfig.yaml` file to run multiple genome alignment on your own data.
 
 You can now prepare the run with the pipeline by doing the following:
  1.  Placing your FASTA sequences, Gff files (suffixed with  `.gff3`), and a  guide tree  into  `ACMGA/data/`.
@@ -123,9 +123,9 @@ docker run -v $(pwd):/data --rm -it mgatools/acmga:1.0
 sh command.sh
 ```
 ## <a name="section4">Please note</a>
-- The suffix of the Gff file of the input genome and the generated ancestral genome is `.gff3` in parameter `gff`. There is no requirement for the DNA sequence file name(`.fasta` or `.fa`).
+- The suffix of the Gff file of the input genome and the generated ancestral genome is `.gff3` in parameter `gff:`. There is no requirement for the DNA sequence file name(`.fasta` or `.fa`).
 - The species name (parameter  `species:`) should be a substring of the fasta and gff names.
-- The name of the ancestor genome comes from the tree structure. (such as `(Ler:0.00493038,(Cvi:0.0145906,(Arabidopsis_thaliana:0.0117518,An-1:0.00833626)N2:0.0070939)N1:0.00493038)N0;`.The name of the ancestor genome are `N2`,`N1`,`N0`).
+- The names of the ancestor genome comes from the tree structure. (such as `(Ler:0.00493038,(Cvi:0.0145906,(Arabidopsis_thaliana:0.0117518,An-1:0.00833626)N2:0.0070939)N1:0.00493038)N0;`.The name of the ancestor genome are `N2`,`N1`,`N0`).
 - The number of threads for AnchorWave and Cactus (parameter `proaliParamters`, `genoaliParamters`, `cactus_threads`)should be set according to your memory configuration to prevent memory overflow.
 - The chromosome names in fasta and gff of the species need to be consistent. Special characters such as spaces cannot be carried. The best example is `chr{chromosome number}`.
 - Sequences that are not at the chromosome level can be removed, such as `scaf`.
