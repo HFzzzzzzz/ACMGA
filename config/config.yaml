@@ -24,9 +24,9 @@ gff:
    'An-1.protein-coding.genes.v2.5.2019-10-09.gff3',
    'Ler.protein-coding.genes.v2.5.2019-10-09.gff3',
    'Arabidopsis_thaliana.TAIR10.56.gff3',
-   'N0.gff',
-   'N1.gff',
-   'N2.gff',
+   'N0.gff3',
+   'N1.gff3',
+   'N2.gff3',
   ]
 
 # fsata and gff species name
@@ -54,7 +54,7 @@ PATH:
 
 #The path of collection of CDS files
 nonDuplicateCDS:
-    'data/non_duplicate_CDS.fa'
+    'data/data/non_duplicate_CDS.fa'
 
 
 
