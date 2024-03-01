@@ -60,7 +60,7 @@ nonDuplicateCDS:
 
 #The path of guide tree
 Tree:
-    'data/evolverPlant.txt'
+    'data/fourevolverPlant.txt'
 
 #The XML file required for the ACMGA to run.
 XML:
@@ -83,4 +83,9 @@ genoaliParamters:
 
 #The number of threads used to run the cactus part
 cactus_threads:
-  "--t 36"
+  "--t 18"
+
+#This mode can choose "docker" or "local", which needs to affect the paths of some commands in the generated command.sh.
+module:
+  # "docker"
+  "local"

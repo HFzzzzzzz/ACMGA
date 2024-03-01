@@ -39,6 +39,7 @@ ancestor=[]
 replacenamea=""
 replacenameb=""
 Cactus_threads=""
+workflowPath=""
 i=0
 def make_paf_alignments(event_tree_string, event_names_to_sequences, ancestor_event_string, params):
     global event_tree_str,i,ancestorevent
@@ -122,7 +123,7 @@ def make_paf_alignments(event_tree_string, event_names_to_sequences, ancestor_ev
             print("samtools view -H --reference " + PATH + event_names_to_sequences[ingroup.iD] +".ref"+ "  " + PATH + genome_a_Variety + "_" + genome_b_Variety + ".anchorwave.sam" + " > " + PATH + genome_a_Variety + "_" + genome_b_Variety + ".2" + ".anchorwave.sam")
             print("grep -v \"^@\" "+ PATH + genome_a_Variety + "_" + genome_b_Variety + ".anchorwave.sam" +" >> " + PATH + genome_a_Variety + "_" + genome_b_Variety + ".2" + ".anchorwave.sam")
 
-        print("k8 /data/workflow/envs/paftools.js" + " sam2paf "+ PATH + genome_a_Variety + "_" + genome_b_Variety +".2"+".anchorwave.sam"+" > "+ PATH + genome_a_Variety + "_" + genome_b_Variety +".tmp.anchorwave.paf")
+        print("k8 "+ workflowPath+"/envs/paftools.js" + " sam2paf "+ PATH + genome_a_Variety + "_" + genome_b_Variety +".2"+".anchorwave.sam"+" > "+ PATH + genome_a_Variety + "_" + genome_b_Variety +".tmp.anchorwave.paf")
         for (genome, seq) in input_seq_map.items():
             global replacenamea
             global replacenameb
@@ -136,7 +137,7 @@ def make_paf_alignments(event_tree_string, event_names_to_sequences, ancestor_ev
         if genome_b_Variety in ancestor:
             replacenameb = genome_b_Variety
         if replacenamea and replacenameb:
-            print("python /data/workflow/scripts/replace_ref_que.py -i " + PATH + genome_a_Variety + "_" + genome_b_Variety + ".tmp.anchorwave.paf" + " -o " + PATH + genome_a_Variety + "_" + genome_b_Variety + ".anchorwave.paf" + " -r " + replacenamea+" -q " +replacenameb)
+            print("python "+workflowPath+"/scripts/replace_ref_que.py -i " + PATH + genome_a_Variety + "_" + genome_b_Variety + ".tmp.anchorwave.paf" + " -o " + PATH + genome_a_Variety + "_" + genome_b_Variety + ".anchorwave.paf" + " -r " + replacenamea+" -q " +replacenameb)
                 # print("python replace_ref_que.py -i " + PATH + genome_a_Variety + "_" + genome_b_Variety + ".tmp.anchorwave.paf" + " -o " + PATH + genome_a_Variety + "_" + genome_b_Variety + ".anchorwave.paf" + " -r " + genome_a_Variety +"_protein"+ " -q " + genome_b_Variety+"_protein")
         print("cat "+ PATH + genome_a_Variety + "_" + genome_b_Variety +".anchorwave.paf"+" > "+ PATH + genome_a_Variety + "_" + genome_b_Variety +".anchorwave_invert.paf")
         print("paf_invert -i "+ PATH + genome_a_Variety + "_" + genome_b_Variety +".anchorwave.paf"+" >> "+ PATH + genome_a_Variety + "_" + genome_b_Variety +".anchorwave_invert.paf")
@@ -268,7 +269,7 @@ def make_chunked_alignments( event_a, genome_a, event_b, genome_b, distance, par
         print("maf-convert sam " + PATH + genome_a_Variety + "_" + genome_b_Variety + ".anchorwave.maf" + "  > " + PATH + genome_a_Variety + "_" + genome_b_Variety + ".2" + ".anchorwave.sam")
         print("samtools view -H --reference " + PATH + genome_a + ".ref  " + PATH + genome_a_Variety + "_" + genome_b_Variety + ".2" + ".anchorwave.sam" + " > " + PATH + genome_a_Variety + "_" + genome_b_Variety + ".3" + ".anchorwave.sam")
         print("grep -v \"^@\" "+ PATH + genome_a_Variety + "_" + genome_b_Variety + ".2" + ".anchorwave.sam"+" >> "+ PATH + genome_a_Variety + "_" + genome_b_Variety + ".3" + ".anchorwave.sam")
-    print("k8 /data/workflow/envs/paftools.js  sam2paf " + PATH +genome_a_Variety+"_"+genome_b_Variety +".3"+".anchorwave.sam" + " > "+ PATH +genome_a_Variety+"_"+genome_b_Variety +".tmp.anchorwave.paf")
+    print("k8 "+workflowPath+"/envs/paftools.js  sam2paf " + PATH +genome_a_Variety+"_"+genome_b_Variety +".3"+".anchorwave.sam" + " > "+ PATH +genome_a_Variety+"_"+genome_b_Variety +".tmp.anchorwave.paf")
     for (genome, seq) in input_seq_map.items():
             global replacenamea
             global replacenameb
@@ -282,7 +283,7 @@ def make_chunked_alignments( event_a, genome_a, event_b, genome_b, distance, par
     if genome_b_Variety in ancestor:
         replacenameb = genome_b_Variety
     if genome_a_Variety and genome_b_Variety:
-            print("python /data/workflow/scripts/replace_ref_que.py -i " + PATH + genome_a_Variety + "_" + genome_b_Variety + ".tmp.anchorwave.paf" + " -o " + PATH + genome_a_Variety + "_" + genome_b_Variety + ".anchorwave.paf" + " -r " + replacenamea+" -q " +replacenameb)
+            print("python "+workflowPath+"/scripts/replace_ref_que.py -i " + PATH + genome_a_Variety + "_" + genome_b_Variety + ".tmp.anchorwave.paf" + " -o " + PATH + genome_a_Variety + "_" + genome_b_Variety + ".anchorwave.paf" + " -r " + replacenamea+" -q " +replacenameb)
     # print( "python replace_ref_que.py -i " + PATH + genome_a_Variety + "_" + genome_b_Variety + ".tmp.anchorwave.paf" + " -o " + PATH + genome_a_Variety + "_" + genome_b_Variety + ".anchorwave.paf" + " -r " + genome_a_Variety + "_protein" + " -q " + genome_b_Variety + "_protein")
 
 
@@ -346,7 +347,7 @@ def halAppendCactusSubtree():
 def progressive_step_2(config_node, subtree_eventmap,spanning_tree, og_map, event):
         cactus_cons_with_resources(spanning_tree, event, config_node, subtree_eventmap,og_map)
 
-def main(xml,evolverMammals,snakemakePath,snakemakeFasta,snakemakeGff,uniqueCds,sVariety,sminimap2ForGff,sminimap2Paramters,sproaliParamters,sgenoaliParamters,scactus_threads):
+def main(xml,evolverMammals,snakemakePath,snakemakeFasta,snakemakeGff,uniqueCds,sVariety,sminimap2ForGff,sminimap2Paramters,sproaliParamters,sgenoaliParamters,scactus_threads,run_module):
     global xmlPath
     global PATH
     global fasta
@@ -360,9 +361,18 @@ def main(xml,evolverMammals,snakemakePath,snakemakeFasta,snakemakeGff,uniqueCds,
     global genoaliParamters
     global input_seq_map
     global Cactus_threads
-    xmlPath="/data/"+xml
-    PATH="/data/"+snakemakePath
-    uniquePath="/data/"+uniqueCds
+    global workflowPath
+    if run_module=="docker":
+        xmlPath = "/data/" + xml
+        PATH = "/data/" + snakemakePath
+        uniquePath = "/data/" + uniqueCds
+        workflowPath="/data/workflow"
+    else:
+        xmlPath =  xml
+        PATH = snakemakePath
+        uniquePath = uniqueCds
+        workflowPath="workflow"
+
     fasta=snakemakeFasta.split(',')
     gff=snakemakeGff.split(',')
     fastaVariety=sVariety.split(',')
@@ -459,6 +469,8 @@ if __name__ == '__main__':
     parser.add_argument('--proaliParamters',type=str,help='Parameter settings for proali using AnchorWave in ACMGA')
     parser.add_argument('--genoaliParamters',type=str,help='Parameter settings for genoali using AnchorWave in ACMGA')
     parser.add_argument('--cactus_threads',type=str,help='Number of threads used in the cactus')
+    parser.add_argument('--run_module',type=str,help='Using docker or local')
+
     args = parser.parse_args()
 
-    main(args.xml,args.tree,args.path,args.fasta,args.gff,args.nonDuplicateCDS,args.species,args.minimap2ForGff,args.minimap2Paramters,args.proaliParamters,args.genoaliParamters,args.cactus_threads)
+    main(args.xml,args.tree,args.path,args.fasta,args.gff,args.nonDuplicateCDS,args.species,args.minimap2ForGff,args.minimap2Paramters,args.proaliParamters,args.genoaliParamters,args.cactus_threads,args.run_module)
