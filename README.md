@@ -22,16 +22,19 @@ AnchorWave-Cactus Multiple Genome Alignment (ACMGA) is a reference-free multiple
 
 ## <a name="section1">Building Environment</a>
 ### ACMGA supports building the environment using the Docker image or locally.
+The parameter `model` in config.yaml needs to be set to docker mode (defalut).
 
 #### Using the Docker image:
 ACMGA currently relies on Snakemake (>6.0.0), Docker, and Singularity. Please make sure these dependencies are installed before running ACMGA. We recommend using this approach.
+
+The parameter `model` in config.yaml needs to be set to local mode.
 
 #### Building the local environment:
 - Python3.10
 - Biopython
 - [Snakemake(>6.0)](https://snakemake.readthedocs.io/en/stable/getting_started/installation.html)
 - [AnchorWave](https://github.com/baoxingsong/AnchorWave)
-- [Cactus](https://github.com/ComparativeGenomicsToolkit/cactus)
+- [Cactus](https://github.com/ComparativeGenomicsToolkit/cactus)(v2.4.0)
 - [SAMtools](http://www.htslib.org/)
 - [Minimap2](https://github.com/lh3/minimap2)
 - [bedtools](https://github.com/arq5x/bedtools2)
@@ -45,7 +48,6 @@ Using this approach, slight modifications to some of the paths (the path of the 
 
 ## <a name="section2">Testing the pipeline</a>
 ### Building Environment using Docker
-
 #### 1、Create a conda environment named "acmga" with Python 3.10 and Snakemake(>6.0)
 ```
 conda install -n base -c conda-forge mamba
