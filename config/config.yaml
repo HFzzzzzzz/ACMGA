@@ -83,9 +83,9 @@ genoaliParamters:
 
 #The number of threads used to run the cactus part
 cactus_threads:
-  "--t 18"
+  "--t 36"
 
 #This mode can choose "docker" or "local", which needs to affect the paths of some commands in the generated command.sh.
-module:
-  # "docker"
-  "local"
+model:
+  "docker"
+  #"local"
