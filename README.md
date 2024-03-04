@@ -17,7 +17,8 @@ AnchorWave-Cactus Multiple Genome Alignment (ACMGA) is a reference-free multiple
 - [Explanation of Output files](#section6)
 - [HAL Calling Vairants](#section7)
 - [Troubleshoot](#section8)
-- [How to cite](#section9)
+- [Script description](#section9)
+- [How to cite](#section10)
 
 
 ## <a name="section1">Building Environment</a>
@@ -166,8 +167,11 @@ When the Snakemake run terminates with an error despite Snakemake (version > 6.0
 -   Input FASTA files and GFF files having chromosomes/scaffolds with special characters; ideally, use names consisting of alphanumeric characters only, such as `chr1`.
 -   The config.yaml ancestor parameters not being right. Set ancestor nodes according to your tree file. Ancestor nodes include all non-leaf nodes in the tree.
 - If the test case fails, please check for incomplete data downloads due to network problems.
-
-
-## <a name="section9">How to cite</a>
+## <a name="section9">Script description</a>
+Under ACMGA/workflow/scripts/ path, there are three scripts at hand:
+- `ACMGAPipeline.py` is the main use is to generate `command.sh`.
+- `CombineCDS.py` is the main use of combined CDS statement.
+- `replace_ref_que.py` use paf statement format `cactus_consolidated` demand statement format
+## <a name="section10">How to cite</a>
 
 If you use ACMGA in your work, please cite:
