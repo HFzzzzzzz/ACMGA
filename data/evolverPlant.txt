@@ -1,8 +1,0 @@
-(Ler.protein:0.00493038,(Cvi.protein:0.0145906,(Arabidopsis_thaliana.protein:0.0117518,An-1.protein:0.00833626)N2:0.0070939)N1:0.00493038)N0;
-
-
-
-Ler.protein  Ler.chr.all.v2.0.fasta
-Cvi.protein  Cvi.chr.all.v2.0.fasta
-Arabidopsis_thaliana.protein  Arabidopsis_thaliana.TAIR10.dna.toplevel.fa
-An-1.protein  An-1.chr.all.v2.0.fasta
