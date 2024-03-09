@@ -60,7 +60,7 @@ nonDuplicateCDS:
 
 #The path of guide tree
 Tree:
-    'data/fourevolverPlant.txt'
+    'data/evolverPlant.txt'
 
 #The XML file required for the ACMGA to run.
 XML:
