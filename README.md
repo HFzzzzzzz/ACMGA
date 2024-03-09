@@ -17,21 +17,25 @@ AnchorWave-Cactus Multiple Genome Alignment (ACMGA) is a reference-free multiple
 - [Explanation of Output files](#section6)
 - [HAL Calling Vairants](#section7)
 - [Troubleshoot](#section8)
-- [How to cite](#section9)
+- [Script description](#section9)
+- [How to cite](#section10)
 
 
 ## <a name="section1">Building Environment</a>
 ### ACMGA supports building the environment using the Docker image or locally.
+The parameter `model` in config.yaml needs to be set to docker mode (defalut).
 
 #### Using the Docker image:
 ACMGA currently relies on Snakemake (>6.0.0), Docker, and Singularity. Please make sure these dependencies are installed before running ACMGA. We recommend using this approach.
+
+The parameter `model` in config.yaml needs to be set to local mode.
 
 #### Building the local environment:
 - Python3.10
 - Biopython
 - [Snakemake(>6.0)](https://snakemake.readthedocs.io/en/stable/getting_started/installation.html)
 - [AnchorWave](https://github.com/baoxingsong/AnchorWave)
-- [Cactus](https://github.com/ComparativeGenomicsToolkit/cactus)
+- [Cactus](https://github.com/ComparativeGenomicsToolkit/cactus)(v2.4.0)
 - [SAMtools](http://www.htslib.org/)
 - [Minimap2](https://github.com/lh3/minimap2)
 - [bedtools](https://github.com/arq5x/bedtools2)
@@ -45,7 +49,6 @@ Using this approach, slight modifications to some of the paths (the path of the 
 
 ## <a name="section2">Testing the pipeline</a>
 ### Building Environment using Docker
-
 #### 1、Create a conda environment named "acmga" with Python 3.10 and Snakemake(>6.0)
 ```
 conda install -n base -c conda-forge mamba
@@ -164,8 +167,11 @@ When the Snakemake run terminates with an error despite Snakemake (version > 6.0
 -   Input FASTA files and GFF files having chromosomes/scaffolds with special characters; ideally, use names consisting of alphanumeric characters only, such as `chr1`.
 -   The config.yaml ancestor parameters not being right. Set ancestor nodes according to your tree file. Ancestor nodes include all non-leaf nodes in the tree.
 - If the test case fails, please check for incomplete data downloads due to network problems.
-
-
-## <a name="section9">How to cite</a>
+## <a name="section9">Script description</a>
+Under ACMGA/workflow/scripts/ path, there are three scripts at hand:
+- `ACMGAPipeline.py` is the main use is to generate `command.sh`.
+- `CombineCDS.py` is the main use of combined CDS statement.
+- `replace_ref_que.py` use paf statement format `cactus_consolidated` demand statement format
+## <a name="section10">How to cite</a>
 
 If you use ACMGA in your work, please cite:
