@@ -69,17 +69,12 @@ conda activate acmga
 conda install -c conda-forge biopython
 ```
 
-#### 2、Download Arabidopsis data
+#### 2、Generate `command.sh`
 ```
-cd ACMGA/data
-sh download.sh
-cd ..
-```
-#### 3、Generate `command.sh`
-```
+cd ACMGA
 snakemake  -j 5 --configfile config/config.yaml   --use-singularity  --singularity-args "-B  $(pwd)"
 ```
-#### 4、Run `command.sh`
+#### 3、Run `command.sh`
 ```
 docker login
 docker run -v $(pwd):/data --rm -it mgatools/acmga:1.0
