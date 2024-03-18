@@ -22,8 +22,9 @@ AnchorWave-Cactus Multiple Genome Alignment (ACMGA) is a reference-free multiple
 - [Script description](#section9)
 - [How to cite](#section10)
 ## <a name="section11">Downloading Code</a>
-
+```
 git clone https://github.com/HFzzzzzzz/ACMGA.git
+```
 
 ## <a name="section1">Building Environment</a>
 ### ACMGA supports building the environment using the Docker image or locally.
@@ -55,8 +56,8 @@ The parameter `model` in config.yaml needs to be set to local mode.
 - [bedtools](https://github.com/arq5x/bedtools2)
 - [bedToGenePred](https://github.com/ENCODE-DCC/kentUtils/tree/master/src/hg/bedToGenePred)
 - [genePredToGtf](https://github.com/ENCODE-DCC/kentUtils/tree/master/src/hg/genePredToGtf)
-- [Gffread](https://github.com/gpertea/gffread)
-- [K8](https://github.com/attractivechaos/k8)
+- [GffRead](https://github.com/gpertea/gffread)
+- [k8](https://github.com/attractivechaos/k8)
 - [maf-convert](https://gitlab.com/mcfrith/last/-/blob/main/bin/maf-convert)
 
 Using this approach,  add the path of the executable program to the `PATH`.
