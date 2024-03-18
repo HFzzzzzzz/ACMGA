@@ -1,6 +1,7 @@
 
 
 
+
  
 
 # ACMGA
@@ -20,12 +21,17 @@ AnchorWave-Cactus Multiple Genome Alignment (ACMGA) is a reference-free multiple
 - [Troubleshoot](#section8)
 - [Script description](#section9)
 - [How to cite](#section10)
+## <a name="section11">Downloading Code</a>
 
+git clone https://github.com/HFzzzzzzz/ACMGA.git
 
+## <a name="section1">Building Environment</a>
+### ACMGA supports building the environment using the Docker image or locally.
 
+#### <a name="section12">Using the Docker image:
+The parameter `model` in config.yaml needs to be set to docker mode (defalut).
 
-## <a name="section2">Testing the pipeline</a>
-### Building Environment using Docker
+ACMGA currently relies on Snakemake (>6.0.0), Docker, and Singularity. Please make sure these dependencies are installed before running ACMGA. We recommend using this approach.
 #### 1、Create a conda environment named "acmga" with Python 3.10 and Snakemake(>6.0)
 ```
 conda install -n base -c conda-forge mamba
@@ -33,37 +39,8 @@ conda activate base
 mamba create -c conda-forge -c bioconda -n acmga python=3.10 snakemake
 ```
 #### 2、Install Docker and Singularity following the documentation instructions
-
  - [Singularity installation guide](https://github.com/sylabs/singularity/blob/master/INSTALL.md)
  - [Docker installation guide](https://docs.docker.com/engine/install/ubuntu/)
-
-### Running ACMGA
-To test the pipeline, you can align some Arabidopsis genomes. 
-#### 1、Download the code, activate the environment and install biopython 
-```
-git clone https://github.com/HFzzzzzzz/ACMGA.git
-conda activate acmga
-conda install -c conda-forge biopython
-```
-
-#### 2、Generate `command.sh`
-```
-cd ACMGA
-snakemake  -j 5 --configfile config/config.yaml   --use-singularity  --singularity-args "-B  $(pwd)"
-```
-#### 3、Run `command.sh`
-```
-sudo docker run -v $(pwd):/data --rm -it mgatools/acmga:1.0
-sh command.sh
-```
-## <a name="section1">Building Environment</a>
-### ACMGA supports building the environment using the Docker image or locally.
-
-#### Using the Docker image:
-The parameter `model` in config.yaml needs to be set to docker mode (defalut).
-
-ACMGA currently relies on Snakemake (>6.0.0), Docker, and Singularity. Please make sure these dependencies are installed before running ACMGA. We recommend using this approach.
-
 
 #### Building the local environment:
 The parameter `model` in config.yaml needs to be set to local mode.
@@ -82,7 +59,30 @@ The parameter `model` in config.yaml needs to be set to local mode.
 - [K8](https://github.com/attractivechaos/k8)
 - [maf-convert](https://gitlab.com/mcfrith/last/-/blob/main/bin/maf-convert)
 
-Using this approach, slight modifications to some of the paths (the path of the tools used in the pipeline and the path of the data used should be the same as the local) within `command.sh` are necessary, give the software executable permissions, and add the path of the executable program to the `PATH`.
+Using this approach,  add the path of the executable program to the `PATH`.
+
+## <a name="section2">Testing the pipeline</a>
+### [Building Environment using Docker](#section2) 
+
+### Running ACMGA
+To test the pipeline, you can align some Arabidopsis genomes. 
+#### 1、Activate the environment and install biopython 
+```
+conda activate acmga
+conda install -c conda-forge biopython
+```
+
+#### 2、Generate `command.sh`
+```
+cd ACMGA
+snakemake  -j 5 --configfile config/config.yaml   --use-singularity  --singularity-args "-B  $(pwd)"
+```
+#### 3、Run `command.sh`
+```
+sudo docker run -v $(pwd):/data --rm -it mgatools/acmga:1.0
+sh command.sh
+```
+
 
 
 
