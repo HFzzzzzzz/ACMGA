@@ -63,7 +63,7 @@ The parameter `model` in config.yaml needs to be set to local mode.
 Using this approach,  add the path of the executable program to the `PATH`.
 
 ## <a name="section2">Testing the pipeline</a>
-### [Building Environment using Docker](#section2) 
+### [Building Environment using Docker](#section12) 
 
 ### Running ACMGA
 To test the pipeline, you can align some Arabidopsis genomes. 
