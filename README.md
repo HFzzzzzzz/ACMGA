@@ -58,14 +58,16 @@ sh command.sh
 ```
 ## <a name="section1">Building Environment</a>
 ### ACMGA supports building the environment using the Docker image or locally.
-The parameter `model` in config.yaml needs to be set to docker mode (defalut).
 
 #### Using the Docker image:
+The parameter `model` in config.yaml needs to be set to docker mode (defalut).
+
 ACMGA currently relies on Snakemake (>6.0.0), Docker, and Singularity. Please make sure these dependencies are installed before running ACMGA. We recommend using this approach.
 
-The parameter `model` in config.yaml needs to be set to local mode.
 
 #### Building the local environment:
+The parameter `model` in config.yaml needs to be set to local mode.
+
 - Python3.10
 - Biopython
 - [Snakemake(>6.0)](https://snakemake.readthedocs.io/en/stable/getting_started/installation.html)
