@@ -30,38 +30,38 @@ git clone https://github.com/HFzzzzzzz/ACMGA.git
 ## <a name="section1">Building Environment</a>
 ### ACMGA supports building the environment using the Docker image or locally.
 
-#### <a name="section12">Using the Docker image:
-The parameter `model` in config.yaml needs to be set to docker mode (defalut).
+- #### <a name="section12">Using the Docker image:
+	The parameter `model` in config.yaml needs to be set to docker mode (defalut).
 
-ACMGA currently relies on Snakemake (>6.0.0), Docker, and Singularity. Please make sure these dependencies are installed before running ACMGA. We recommend using this approach.
-#### 1、Create a conda environment named "acmga" with Python 3.10 and Snakemake(>6.0)
-```
-conda install -n base -c conda-forge mamba
-conda activate base
-mamba create -c conda-forge -c bioconda -n acmga python=3.10 snakemake
-```
-#### 2、Install Docker and Singularity following the documentation instructions
- - [Singularity installation guide](https://github.com/sylabs/singularity/blob/master/INSTALL.md)
- - [Docker installation guide](https://docs.docker.com/engine/install/ubuntu/)
+	ACMGA currently relies on Snakemake (>6.0.0), Docker, and Singularity. Please make sure these dependencies are installed before running ACMGA. We recommend using this approach.
+	#### 1、Create a conda environment named "acmga" with Python 3.10 and Snakemake(>6.0)
+	```
+	conda install -n base -c conda-forge mamba
+	conda activate base
+	mamba create -c conda-forge -c bioconda -n acmga python=3.10 snakemake
+	```
+	#### 2、Install Docker and Singularity following the documentation instructions
+	 - [Singularity installation guide](https://github.com/sylabs/singularity/blob/master/INSTALL.md)
+	 - [Docker installation guide](https://docs.docker.com/engine/install/ubuntu/)
 
-#### Building the local environment:
-The parameter `model` in config.yaml needs to be set to local mode.
+- #### Building the local environment:
+	The parameter `model` in config.yaml needs to be set to local mode.
 
-- Python3.10
-- Biopython
-- [Snakemake(>6.0)](https://snakemake.readthedocs.io/en/stable/getting_started/installation.html)
-- [AnchorWave](https://github.com/baoxingsong/AnchorWave)
-- [Cactus](https://github.com/ComparativeGenomicsToolkit/cactus)(v2.4.0)
-- [SAMtools](http://www.htslib.org/)
-- [Minimap2](https://github.com/lh3/minimap2)
-- [bedtools](https://github.com/arq5x/bedtools2)
-- [bedToGenePred](https://github.com/ENCODE-DCC/kentUtils/tree/master/src/hg/bedToGenePred)
-- [genePredToGtf](https://github.com/ENCODE-DCC/kentUtils/tree/master/src/hg/genePredToGtf)
-- [GffRead](https://github.com/gpertea/gffread)
-- [k8](https://github.com/attractivechaos/k8)
-- [maf-convert](https://gitlab.com/mcfrith/last/-/blob/main/bin/maf-convert)
+	- Python3.10
+	- Biopython
+	- [Snakemake(>6.0)](https://snakemake.readthedocs.io/en/stable/getting_started/installation.html)
+	- [AnchorWave](https://github.com/baoxingsong/AnchorWave)
+	- [Cactus](https://github.com/ComparativeGenomicsToolkit/cactus)(v2.4.0)
+	- [SAMtools](http://www.htslib.org/)
+	- [Minimap2](https://github.com/lh3/minimap2)
+	- [bedtools](https://github.com/arq5x/bedtools2)
+	- [bedToGenePred](https://github.com/ENCODE-DCC/kentUtils/tree/master/src/hg/bedToGenePred)
+	- [genePredToGtf](https://github.com/ENCODE-DCC/kentUtils/tree/master/src/hg/genePredToGtf)
+	- [GffRead](https://github.com/gpertea/gffread)
+	- [k8](https://github.com/attractivechaos/k8)
+	- [maf-convert](https://gitlab.com/mcfrith/last/-/blob/main/bin/maf-convert)
 
-Using this approach, you need add the path of the executable program to the `PATH`.
+	Using this approach, you need add the path of the executable program to the `PATH`.
 
 ## <a name="section2">Testing the pipeline</a>
 - ### [Building Environment using Docker](#section12) 
