@@ -60,29 +60,29 @@ The parameter `model` in config.yaml needs to be set to local mode.
 - [k8](https://github.com/attractivechaos/k8)
 - [maf-convert](https://gitlab.com/mcfrith/last/-/blob/main/bin/maf-convert)
 
-Using this approach,  add the path of the executable program to the `PATH`.
+Using this approach, you need add the path of the executable program to the `PATH`.
 
 ## <a name="section2">Testing the pipeline</a>
-### [Building Environment using Docker](#section12) 
+- ### [Building Environment using Docker](#section12) 
 
-### Running ACMGA
-To test the pipeline, you can align some Arabidopsis genomes. 
-#### 1、Activate the environment and install biopython 
-```
-conda activate acmga
-conda install -c conda-forge biopython
-```
+- ### Running ACMGA
+	To test the pipeline, you can align some Arabidopsis genomes. 
+	#### 1、Activate the environment and install biopython 
+	```
+	conda activate acmga
+	conda install -c conda-forge biopython
+	```
 
-#### 2、Generate `command.sh`
-```
-cd ACMGA
-snakemake  -j 5 --configfile config/config.yaml   --use-singularity  --singularity-args "-B  $(pwd)"
-```
-#### 3、Run `command.sh`
-```
-sudo docker run -v $(pwd):/data --rm -it mgatools/acmga:1.0
-sh command.sh
-```
+	#### 2、Generate `command.sh` (bash script for the entire process)
+	```
+	cd ACMGA
+	snakemake  -j 5 --configfile config/config.yaml   --use-singularity  --singularity-args "-B  $(pwd)"
+	```
+	#### 3、Run `command.sh`
+	```
+	sudo docker run -v $(pwd):/data --rm -it mgatools/acmga:1.0
+	sh command.sh
+	```
 
 
 
