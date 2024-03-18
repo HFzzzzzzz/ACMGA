@@ -11,8 +11,10 @@ AnchorWave-Cactus Multiple Genome Alignment (ACMGA) is a reference-free multiple
 
 
 ## Table of Contents
-- [Testing the pipeline](#section2)
+- [Downloading Code](#section11)
 - [Building Environment](#section1)
+- [Testing the pipeline](#section2)
+
 - [Quickstart](#section3)
 - [Please note](#section4)
 - [Generat a guide tree](#section5)
