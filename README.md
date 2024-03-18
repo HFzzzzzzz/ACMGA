@@ -1,5 +1,6 @@
 
 
+
  
 
 # ACMGA
@@ -9,8 +10,8 @@ AnchorWave-Cactus Multiple Genome Alignment (ACMGA) is a reference-free multiple
 
 
 ## Table of Contents
-- [Building Environment](#section1)
 - [Testing the pipeline](#section2)
+- [Building Environment](#section1)
 - [Quickstart](#section3)
 - [Please note](#section4)
 - [Generat a guide tree](#section5)
@@ -21,31 +22,7 @@ AnchorWave-Cactus Multiple Genome Alignment (ACMGA) is a reference-free multiple
 - [How to cite](#section10)
 
 
-## <a name="section1">Building Environment</a>
-### ACMGA supports building the environment using the Docker image or locally.
-The parameter `model` in config.yaml needs to be set to docker mode (defalut).
 
-#### Using the Docker image:
-ACMGA currently relies on Snakemake (>6.0.0), Docker, and Singularity. Please make sure these dependencies are installed before running ACMGA. We recommend using this approach.
-
-The parameter `model` in config.yaml needs to be set to local mode.
-
-#### Building the local environment:
-- Python3.10
-- Biopython
-- [Snakemake(>6.0)](https://snakemake.readthedocs.io/en/stable/getting_started/installation.html)
-- [AnchorWave](https://github.com/baoxingsong/AnchorWave)
-- [Cactus](https://github.com/ComparativeGenomicsToolkit/cactus)(v2.4.0)
-- [SAMtools](http://www.htslib.org/)
-- [Minimap2](https://github.com/lh3/minimap2)
-- [bedtools](https://github.com/arq5x/bedtools2)
-- [bedToGenePred](https://github.com/ENCODE-DCC/kentUtils/tree/master/src/hg/bedToGenePred)
-- [genePredToGtf](https://github.com/ENCODE-DCC/kentUtils/tree/master/src/hg/genePredToGtf)
-- [Gffread](https://github.com/gpertea/gffread)
-- [K8](https://github.com/attractivechaos/k8)
-- [maf-convert](https://gitlab.com/mcfrith/last/-/blob/main/bin/maf-convert)
-
-Using this approach, slight modifications to some of the paths (the path of the tools used in the pipeline and the path of the data used should be the same as the local) within `command.sh` are necessary, give the software executable permissions, and add the path of the executable program to the `PATH`.
 
 ## <a name="section2">Testing the pipeline</a>
 ### Building Environment using Docker
@@ -79,6 +56,33 @@ snakemake  -j 5 --configfile config/config.yaml   --use-singularity  --singulari
 sudo docker run -v $(pwd):/data --rm -it mgatools/acmga:1.0
 sh command.sh
 ```
+## <a name="section1">Building Environment</a>
+### ACMGA supports building the environment using the Docker image or locally.
+The parameter `model` in config.yaml needs to be set to docker mode (defalut).
+
+#### Using the Docker image:
+ACMGA currently relies on Snakemake (>6.0.0), Docker, and Singularity. Please make sure these dependencies are installed before running ACMGA. We recommend using this approach.
+
+The parameter `model` in config.yaml needs to be set to local mode.
+
+#### Building the local environment:
+- Python3.10
+- Biopython
+- [Snakemake(>6.0)](https://snakemake.readthedocs.io/en/stable/getting_started/installation.html)
+- [AnchorWave](https://github.com/baoxingsong/AnchorWave)
+- [Cactus](https://github.com/ComparativeGenomicsToolkit/cactus)(v2.4.0)
+- [SAMtools](http://www.htslib.org/)
+- [Minimap2](https://github.com/lh3/minimap2)
+- [bedtools](https://github.com/arq5x/bedtools2)
+- [bedToGenePred](https://github.com/ENCODE-DCC/kentUtils/tree/master/src/hg/bedToGenePred)
+- [genePredToGtf](https://github.com/ENCODE-DCC/kentUtils/tree/master/src/hg/genePredToGtf)
+- [Gffread](https://github.com/gpertea/gffread)
+- [K8](https://github.com/attractivechaos/k8)
+- [maf-convert](https://gitlab.com/mcfrith/last/-/blob/main/bin/maf-convert)
+
+Using this approach, slight modifications to some of the paths (the path of the tools used in the pipeline and the path of the data used should be the same as the local) within `command.sh` are necessary, give the software executable permissions, and add the path of the executable program to the `PATH`.
+
+
 
 ## <a name="section3">Quickstart </a>
 For a quickstart with your own data, you can follow the instructions below. We recommend testing the pipeline with our test data first to ensure the pipeline will work correctly.
