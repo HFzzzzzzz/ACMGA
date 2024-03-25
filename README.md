@@ -50,7 +50,7 @@ git clone https://github.com/HFzzzzzzz/ACMGA.git
 	- Python3.10
 	- Biopython
 	- [Snakemake(>6.0)](https://snakemake.readthedocs.io/en/stable/getting_started/installation.html)
-	- [AnchorWave](https://github.com/baoxingsong/AnchorWave)
+	- [AnchorWave](https://github.com/baoxingsong/AnchorWave).(v1.2.1)
 	- [Cactus](https://github.com/ComparativeGenomicsToolkit/cactus)(v2.4.0)
 	- [SAMtools](http://www.htslib.org/)
 	- [Minimap2](https://github.com/lh3/minimap2)
