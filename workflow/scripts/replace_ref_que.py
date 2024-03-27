@@ -8,29 +8,30 @@ parser.add_argument("-q", "--que", required=True, help="value of que")
 args = parser.parse_args()
 # with open(args.input_file) as input_file:
 
-with open(args.input_file) as input_file, open(args.output_file, "w") as output_file:
+with open(args.input_file, "r", encoding='utf-8') as input_file, open(args.output_file, "w", encoding='utf-8') as output_file:
     for line in input_file:
         lineone=line.split()[0]
         # print(lineone)
         linesix=line.split()[5]
         # print(linesix)
         # # Replace "chr10" at the beginning of the line with "id=foo|chr10".
+        # Chr10 or chr10
         if('chr' in lineone):
+            # chr10
             line = line.replace("chr", "id={}|chr".format(args.que), 1)
+        elif ('Chr' in lineone):
+            # Chr10
+            line = line.replace("Chr", "id={}|Chr".format(args.que), 1)
+        else:
+            print("Error: please check the chromosome name.")
+            break
+
         # Replace "chr10" in the sixth column with "id=bar|chr10".
         if('chr' in linesix):
             line = line.replace("\tchr", "\tid={}|chr".format(args.ref), 1)
-        if (line.split()[4] == "-"):
-            start = int(line.split()[1]) - int(line.split()[3])
-            end = start + int(line.split()[3]) - int(line.split()[2])
-            start = str(start)
-            end = str(end)
+        elif ('Chr' in linesix):
+            line = line.replace("\tChr", "\tid={}|Chr".format(args.ref), 1)
         else:
-            start = line.split()[2]
-            end = line.split()[3]
-        spl = line.split()
-        spl[2] = start
-        spl[3] = end
-        newline = '\t'.join(spl)
-        output_file.write(newline)
-        output_file.write("\n")
+            print("Error: please check the chromosome name.")
+            break
+        output_file.write(line)
