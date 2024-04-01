@@ -10,28 +10,31 @@ args = parser.parse_args()
 
 with open(args.input_file, "r", encoding='utf-8') as input_file, open(args.output_file, "w", encoding='utf-8') as output_file:
     for line in input_file:
-        lineone=line.split()[0]
-        # print(lineone)
-        linesix=line.split()[5]
-        # print(linesix)
+        l = line.strip().split()  # noqa: E741
+        lineone=l[0]
+        linesix=l[5]
+
         # # Replace "chr10" at the beginning of the line with "id=foo|chr10".
         # Chr10 or chr10
         if('chr' in lineone):
             # chr10
-            line = line.replace("chr", "id={}|chr".format(args.que), 1)
+            lineone_new = lineone.replace("chr", f"id={args.que}|chr", 1)
         elif ('Chr' in lineone):
             # Chr10
-            line = line.replace("Chr", "id={}|Chr".format(args.que), 1)
+            lineone_new = lineone.replace("Chr", f"id={args.que}|Chr", 1)
         else:
             print("Error: please check the chromosome name.")
             break
 
         # Replace "chr10" in the sixth column with "id=bar|chr10".
         if('chr' in linesix):
-            line = line.replace("\tchr", "\tid={}|chr".format(args.ref), 1)
+            linesix_new = linesix.replace("chr", f"id={args.ref}|chr", 1)
         elif ('Chr' in linesix):
-            line = line.replace("\tChr", "\tid={}|Chr".format(args.ref), 1)
+            linesix_new = linesix.replace("Chr", f"id={args.ref}|Chr", 1)
         else:
             print("Error: please check the chromosome name.")
             break
+        l[0] = lineone_new
+        l[5] = linesix_new
+        line = "\t".join(l) + "\n"
         output_file.write(line)
