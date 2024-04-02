@@ -140,8 +140,8 @@ def make_paf_alignments(event_tree_string, event_names_to_sequences, ancestor_ev
             print("python "+workflowPath+"/scripts/replace_ref_que.py -i " + PATH + genome_a_Variety + "_" + genome_b_Variety + ".tmp.anchorwave.paf" + " -o " + PATH + genome_a_Variety + "_" + genome_b_Variety + ".anchorwave.paf" + " -r " + replacenamea+" -q " +replacenameb)
                 # print("python replace_ref_que.py -i " + PATH + genome_a_Variety + "_" + genome_b_Variety + ".tmp.anchorwave.paf" + " -o " + PATH + genome_a_Variety + "_" + genome_b_Variety + ".anchorwave.paf" + " -r " + genome_a_Variety +"_protein"+ " -q " + genome_b_Variety+"_protein")
         print("cat "+ PATH + genome_a_Variety + "_" + genome_b_Variety +".anchorwave.paf"+" > "+ PATH + genome_a_Variety + "_" + genome_b_Variety +".anchorwave_invert.paf")
-        print("paf_invert -i "+ PATH + genome_a_Variety + "_" + genome_b_Variety +".anchorwave.paf"+" >> "+ PATH + genome_a_Variety + "_" + genome_b_Variety +".anchorwave_invert.paf")
-        print("paf_chain -i "+ PATH + genome_a_Variety + "_" + genome_b_Variety +".anchorwave_invert.paf"+" --maxGapLength 1000000 --chainGapOpen 5000 --chainGapExtend 1 --trimFraction 0.02 --logLevel DEBUG "+ " >> "+PATH+'subtree'+str(i)+"/anchorwave_chain.paf")
+        print("paffy  invert -i "+ PATH + genome_a_Variety + "_" + genome_b_Variety +".anchorwave.paf"+" >> "+ PATH + genome_a_Variety + "_" + genome_b_Variety +".anchorwave_invert.paf")
+        print("paffy  chain -i "+ PATH + genome_a_Variety + "_" + genome_b_Variety +".anchorwave_invert.paf"+" --maxGapLength 1000000 --chainGapOpen 5000 --chainGapExtend 1 --trimFraction 0.02 --logLevel DEBUG "+ " >> "+PATH+'subtree'+str(i)+"/anchorwave_chain.paf")
 
     distances = get_distances(event_tree)  # Distances between all pairs of nodes
     outgroup_events.sort(key=lambda outgroup: distances[ancestor_event, outgroup])  # Sort from closest to furthest
@@ -196,8 +196,8 @@ def make_ingroup_to_outgroup_alignments_1(ingroup_event, outgroup_events, event_
         else:
             print("cat " +  PATH + genome_a_Variety + "_" + genome_b_Variety +".anchorwave.paf"+"     "+PATH+oldgenome_a_Variety+"_"+oldgenome_b_Variety+".anchorwave.paf" + " > " +  PATH + 'cat_'+oldgenome_a_Variety+'_'+oldgenome_b_Variety+'_'+genome_a_Variety + "_" + genome_b_Variety + ".2.anchorwave.paf")
         print("cat " +PATH + 'cat_'+oldgenome_a_Variety+'_'+oldgenome_b_Variety+'_'+genome_a_Variety + "_" + genome_b_Variety + ".2.anchorwave.paf" + " > " + PATH + genome_a_Variety + "_" + genome_b_Variety + ".2.anchorwave_invert.paf")
-        print("paf_invert -i " + PATH + 'cat_'+oldgenome_a_Variety+'_'+oldgenome_b_Variety+'_'+genome_a_Variety + "_" + genome_b_Variety + ".2.anchorwave.paf" + " >> " +PATH + genome_a_Variety + "_" + genome_b_Variety + ".2.anchorwave_invert.paf")
-        print("paf_chain -i " +PATH + genome_a_Variety + "_" + genome_b_Variety + ".2.anchorwave_invert.paf" + " --maxGapLength 1000000 --chainGapOpen 5000 --chainGapExtend 1 --trimFraction 0.02 --logLevel DEBUG " + " >> "+PATH+'subtree'+str(i)+"/anchorwave_chain.paf")
+        print("paffy  invert -i " + PATH + 'cat_'+oldgenome_a_Variety+'_'+oldgenome_b_Variety+'_'+genome_a_Variety + "_" + genome_b_Variety + ".2.anchorwave.paf" + " >> " +PATH + genome_a_Variety + "_" + genome_b_Variety + ".2.anchorwave_invert.paf")
+        print("paffy  chain-i " +PATH + genome_a_Variety + "_" + genome_b_Variety + ".2.anchorwave_invert.paf" + " --maxGapLength 1000000 --chainGapOpen 5000 --chainGapExtend 1 --trimFraction 0.02 --logLevel DEBUG " + " >> "+PATH+'subtree'+str(i)+"/anchorwave_chain.paf")
 
 def make_chunked_alignments( event_a, genome_a, event_b, genome_b, distance, params):
     print("\n" + "#m============================================================================================================================================================================================================================="+str(i) + "\n")
@@ -298,7 +298,7 @@ def cactus_cons_with_resources(spanning_tree, event, config_node, subtree_eventm
             tmpdict[event]=sanitized[event]
     outgroups = og_map[ancestorevent] if ancestorevent in og_map else []
     pairs = [[genome, faPath] for genome, faPath in list(tmpdict.items())]
-    print("paf_tile -i "   +PATH+'subtree'+str(i)+"/anchorwave_chain.paf" + " --logLevel DEBUG " + " > " +  PATH+'subtree'+str(i)+"/anchorwave_tile.paf")
+    print("paffy  tile -i "   +PATH+'subtree'+str(i)+"/anchorwave_chain.paf" + " --logLevel DEBUG " + " > " +  PATH+'subtree'+str(i)+"/anchorwave_tile.paf")
     print("grep -v tp:A:S "+PATH+'subtree'+str(i)+"/anchorwave_tile.paf"+ " > "+ PATH + str(ancestorevent) + "_primary.paf || true")
     print("grep  tp:A:S "  +PATH+'subtree'+str(i)+"/anchorwave_tile.paf"+ "> " + PATH  +str(ancestorevent) + "_secondary.paf || true")
     if(outgroups==[]):
