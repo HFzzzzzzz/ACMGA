@@ -1,6 +1,6 @@
 
 #configfile: "config/config.yaml"
-singularity: "docker://mgatools/acmga:1.0"
+# singularity: "docker://mgatools/acmga:1.0"
 
 rule anchor:
     params:
