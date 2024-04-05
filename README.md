@@ -51,7 +51,7 @@ git clone https://github.com/HFzzzzzzz/ACMGA.git
 	- Biopython
 	- [Snakemake(>6.0)](https://snakemake.readthedocs.io/en/stable/getting_started/installation.html)
 	- [AnchorWave](https://github.com/baoxingsong/AnchorWave).(v1.2.3 or later)
-	- [Cactus](https://github.com/ComparativeGenomicsToolkit/cactus)(v2.4.0)
+	- [Cactus](https://github.com/ComparativeGenomicsToolkit/cactus)(v2.7.0)
 	- [SAMtools](http://www.htslib.org/)
 	- [Minimap2](https://github.com/lh3/minimap2)
 	- [bedtools](https://github.com/arq5x/bedtools2)
@@ -70,18 +70,18 @@ git clone https://github.com/HFzzzzzzz/ACMGA.git
 	To test the pipeline, you can align some Arabidopsis genomes. 
 	#### 1、Activate the environment and install biopython 
 	```
-	conda activate acmga
-	conda install -c conda-forge biopython
+
+	git clone https://github.com/zhangyixing3/ACMGA
 	```
 
 	#### 2、Generate `command.sh` (bash script for the entire process)
 	```
 	cd ACMGA
-	snakemake  -j 5 --configfile config/config.yaml   --use-singularity  --singularity-args "-B  $(pwd)"
+	snakemake  -j 5 --configfile config/config.yaml   
 	```
 	#### 3、Run `command.sh`
 	```
-	sudo docker run -v $(pwd):/data --rm -it mgatools/acmga:1.0
+	#local model
 	sh command.sh
 	```
 
@@ -120,11 +120,9 @@ cd ACMGA
 snakemake  -j 5 --configfile config/myconfig.yaml   --use-singularity  --singularity-args "-B $(pwd)"
 ```
 
-2.The second step is to enter the docker environment and run `command.sh`
+2.The second step run `command.sh`
 
 ```
-docker login
-docker run -v $(pwd):/data --rm -it mgatools/acmga:1.0
 sh command.sh
 ```
 ## <a name="section4">Please note</a>
