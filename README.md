@@ -68,9 +68,9 @@ git clone https://github.com/HFzzzzzzz/ACMGA.git
 
 - ### Running ACMGA
 	To test the pipeline, you can align some Arabidopsis genomes. 
-	#### 1、Activate the environment and install biopython 
+	#### 1、 Install the above dependencies
 	```
-
+	# install ACMGA
 	git clone https://github.com/zhangyixing3/ACMGA
 	```
 
