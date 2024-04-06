@@ -24,8 +24,11 @@ AnchorWave-Cactus Multiple Genome Alignment (ACMGA) is a reference-free multiple
 - [How to cite](#section10)
 ## <a name="section11">Downloading Code</a>
 ```
-git clone https://github.com/HFzzzzzzz/ACMGA.git
+git clone git@github.com:zhangyixing3/ACMGA.git
 ```
+**Note**: genome.fasta do not start with "N",else it will cause error.
+**This code is based on the original ACMGA code, and has been modified to support my project.**
+The original code can be found at https://github.com/HFzzzzzzz/ACMGA, and my aim is running ACMGA on my local model without docker.
 
 ## <a name="section1">Building Environment</a>
 ### ACMGA supports building the environment using the Docker image or locally.
