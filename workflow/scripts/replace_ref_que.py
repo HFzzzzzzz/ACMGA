@@ -12,9 +12,6 @@ args = parser.parse_args()
 
 with open(args.input_file, "r", encoding='utf-8') as input_file, open(args.output_file, "w", encoding='utf-8') as output_file:
     for line in input_file:
-        if line.startswith("N"):
-            output_file.write(line)
-            continue
         l = line.strip().split()  # noqa: E741
         lineone=l[0]
         linesix=l[5]
@@ -31,6 +28,9 @@ with open(args.input_file, "r", encoding='utf-8') as input_file, open(args.outpu
         else:
             print("Error: please check the chromosome name.")
             break
+        # Nnumberref does not change ID like N70ref N1ref N2ref
+        if lineone.startswith("N"):
+            lineone_new = lineone
 
         # Replace "chr10" in the sixth column with "id=bar|chr10".
         if('chr' in linesix):
@@ -42,6 +42,9 @@ with open(args.input_file, "r", encoding='utf-8') as input_file, open(args.outpu
         else:
             print("Error: please check the chromosome name.")
             break
+        # Nnumberref does not change ID like N70ref N1ref N2ref
+        if linesix.startswith("N"):
+            linesix_new = linesix
 
         l[0] = lineone_new
         l[5] = linesix_new
