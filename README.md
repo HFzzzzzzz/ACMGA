@@ -68,25 +68,22 @@ https://github.com/HFzzzzzzz/ACMGA.git
 ## <a name="section2">Testing the pipeline</a>
 - ### [Building Environment using Docker](#section12) 
 
-- ### Running ACMGA
-	To test the pipeline, you can align some Arabidopsis genomes. 
-	#### 1、 Install the above dependencies
+- #### 1、Activate the environment and install biopython 
 	```
-	https://github.com/HFzzzzzzz/ACMGA.git
+	conda activate acmga
+	conda install -c conda-forge biopython
 	```
 
 	#### 2、Generate `command.sh` (bash script for the entire process)
 	```
 	cd ACMGA
-	snakemake  -j 5 --configfile config/config.yaml   
+	snakemake  -j 5 --configfile config/config.yaml   --use-singularity  --singularity-args "-B  $(pwd)"
 	```
 	#### 3、Run `command.sh`
 	```
-	#local model
+	sudo docker run -v $(pwd):/data --rm -it mgatools/acmga:1.0
 	sh command.sh
 	```
-
-
 
 
 ## <a name="section3">Quickstart </a>
@@ -121,9 +118,11 @@ cd ACMGA
 snakemake  -j 5 --configfile config/myconfig.yaml   --use-singularity  --singularity-args "-B $(pwd)"
 ```
 
-2.The second step run `command.sh`
+2.The second step is to enter the docker environment and run `command.sh`
 
 ```
+docker login
+docker run -v $(pwd):/data --rm -it mgatools/acmga:1.0
 sh command.sh
 ```
 ## <a name="section4">Please note</a>
