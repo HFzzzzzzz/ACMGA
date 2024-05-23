@@ -72,8 +72,7 @@ https://github.com/HFzzzzzzz/ACMGA.git
 	To test the pipeline, you can align some Arabidopsis genomes. 
 	#### 1、 Install the above dependencies
 	```
-	# install ACMGA
-	git clone https://github.com/zhangyixing3/ACMGA
+	https://github.com/HFzzzzzzz/ACMGA.git
 	```
 
 	#### 2、Generate `command.sh` (bash script for the entire process)
