@@ -1,5 +1,6 @@
 import argparse
 
+
 parser = argparse.ArgumentParser()
 parser.add_argument("-i", "--input-file", required=True, help="input file")
 parser.add_argument("-o", "--output-file", required=True, help="output file")
@@ -8,29 +9,45 @@ parser.add_argument("-q", "--que", required=True, help="value of que")
 args = parser.parse_args()
 # with open(args.input_file) as input_file:
 
-with open(args.input_file) as input_file, open(args.output_file, "w") as output_file:
+with open(args.input_file, "r", encoding="utf-8") as input_file, open(
+    args.output_file, "w", encoding="utf-8"
+) as output_file:
     for line in input_file:
-        lineone=line.split()[0]
-        # print(lineone)
-        linesix=line.split()[5]
-        # print(linesix)
+        l = line.strip().split()  # noqa: E741
+        lineone = l[0]
+        linesix = l[5]
         # # Replace "chr10" at the beginning of the line with "id=foo|chr10".
-        if('chr' in lineone):
-            line = line.replace("chr", "id={}|chr".format(args.que), 1)
-        # Replace "chr10" in the sixth column with "id=bar|chr10".
-        if('chr' in linesix):
-            line = line.replace("\tchr", "\tid={}|chr".format(args.ref), 1)
-        if (line.split()[4] == "-"):
-            start = int(line.split()[1]) - int(line.split()[3])
-            end = start + int(line.split()[3]) - int(line.split()[2])
-            start = str(start)
-            end = str(end)
+        # Chr10 or chr10
+        if "chr" in lineone:
+            # chr 10
+            number = lineone.split("chr")[1]
+            lineone_new = f"id={args.que}|chr{number}"
+        elif "Chr" in lineone:
+            # Chr10
+            number = lineone.split("Chr")[1]
+            lineone_new = f"id={args.que}|Chr{number}"
         else:
-            start = line.split()[2]
-            end = line.split()[3]
-        spl = line.split()
-        spl[2] = start
-        spl[3] = end
-        newline = '\t'.join(spl)
-        output_file.write(newline)
-        output_file.write("\n")
+            print("Error: please check the chromosome name.")
+            break
+        # Nnumberref does not change ID like N70ref N1ref N2ref
+        if lineone.startswith("N"):
+            lineone_new = lineone
+
+        # Replace "chr10" in the sixth column with "id=bar|chr10".
+        if "chr" in linesix:
+            number = linesix.split("chr")[1]
+            linesix_new = f"id={args.ref}|chr{number}"
+        elif "Chr" in linesix:
+            number = linesix.split("Chr")[1]
+            linesix_new = f"id={args.ref}|Chr{number}"
+        else:
+            print("Error: please check the chromosome name.")
+            break
+        # Nnumberref does not change ID like N70ref N1ref N2ref
+        if linesix.startswith("N"):
+            linesix_new = linesix
+
+        l[0] = lineone_new
+        l[5] = linesix_new
+        line = "\t".join(l) + "\n"
+        output_file.write(line)

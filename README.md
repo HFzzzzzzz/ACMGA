@@ -24,8 +24,11 @@ AnchorWave-Cactus Multiple Genome Alignment (ACMGA) is a reference-free multiple
 - [How to cite](#section10)
 ## <a name="section11">Downloading Code</a>
 ```
-git clone https://github.com/HFzzzzzzz/ACMGA.git
+git clone git@github.com:zhangyixing3/ACMGA.git
 ```
+**Note**: genome.fasta do not start with "N",else it will cause error.
+**This code is based on the original ACMGA code, and has been modified to support my project.**
+The original code can be found at https://github.com/HFzzzzzzz/ACMGA, and my aim is running ACMGA on my local model without docker.
 
 ## <a name="section1">Building Environment</a>
 ### ACMGA supports building the environment using the Docker image or locally.
@@ -50,8 +53,8 @@ git clone https://github.com/HFzzzzzzz/ACMGA.git
 	- Python3.10
 	- Biopython
 	- [Snakemake(>6.0)](https://snakemake.readthedocs.io/en/stable/getting_started/installation.html)
-	- [AnchorWave](https://github.com/baoxingsong/AnchorWave).(v1.2.1)
-	- [Cactus](https://github.com/ComparativeGenomicsToolkit/cactus)(v2.4.0)
+	- [AnchorWave](https://github.com/baoxingsong/AnchorWave).(v1.2.3 or later)
+	- [Cactus](https://github.com/ComparativeGenomicsToolkit/cactus)(v2.7.0)
 	- [SAMtools](http://www.htslib.org/)
 	- [Minimap2](https://github.com/lh3/minimap2)
 	- [bedtools](https://github.com/arq5x/bedtools2)
@@ -68,20 +71,20 @@ git clone https://github.com/HFzzzzzzz/ACMGA.git
 
 - ### Running ACMGA
 	To test the pipeline, you can align some Arabidopsis genomes. 
-	#### 1、Activate the environment and install biopython 
+	#### 1、 Install the above dependencies
 	```
-	conda activate acmga
-	conda install -c conda-forge biopython
+	# install ACMGA
+	git clone https://github.com/zhangyixing3/ACMGA
 	```
 
 	#### 2、Generate `command.sh` (bash script for the entire process)
 	```
 	cd ACMGA
-	snakemake  -j 5 --configfile config/config.yaml   --use-singularity  --singularity-args "-B  $(pwd)"
+	snakemake  -j 5 --configfile config/config.yaml   
 	```
 	#### 3、Run `command.sh`
 	```
-	sudo docker run -v $(pwd):/data --rm -it mgatools/acmga:1.0
+	#local model
 	sh command.sh
 	```
 
@@ -120,11 +123,9 @@ cd ACMGA
 snakemake  -j 5 --configfile config/myconfig.yaml   --use-singularity  --singularity-args "-B $(pwd)"
 ```
 
-2.The second step is to enter the docker environment and run `command.sh`
+2.The second step run `command.sh`
 
 ```
-docker login
-docker run -v $(pwd):/data --rm -it mgatools/acmga:1.0
 sh command.sh
 ```
 ## <a name="section4">Please note</a>

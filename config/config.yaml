@@ -87,5 +87,5 @@ cactus_threads:
 
 #This mode can choose "docker" or "local", which needs to affect the paths of some commands in the generated command.sh.
 model:
-  "docker"
-  #"local"
+  # "docker"
+  "local"
