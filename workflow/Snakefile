@@ -1,6 +1,6 @@
 
 #configfile: "config/config.yaml"
-# singularity: "docker://mgatools/acmga:1.0"
+singularity: "docker://mgatools/acmga:1.0"
 
 rule anchor:
     params:
@@ -20,12 +20,10 @@ rule anchor:
 
     shell:
         """
-        echo '#!/bin/bash' > command.sh
-        echo 'set -e  # 如果任何命令失败，立即退出脚本 ' >> command.sh
         ./workflow/scripts/ACMGAPipeline.py --xml {params.xml} --tree {params.tree} --path {params.path} --fasta {params.fasta} --gff {params.gff} --nonDuplicateCDS {params.nonDuplicateCDS} --species {params.species}  --minimap2ForGff "{params.minimap2ForGff}" --minimap2Paramters "{params.minimap2Paramters}" --proaliParamters "{params.proaliParamters}" --genoaliParamters "{params.genoaliParamters}" --cactus_threads "{params.cactus_threads}" --run_module "{params.run_model}" >> command.sh
         """
 
-    #./workflow/scripts/ACMGAPipeline.py {params.xml} {params.tree} {params.path} {params.fasta} {params.gff} {params.nonDuplicateCDS} {params.species}  "{params.minimap2ForGff}" "{params.minimap2Paramters}" "{params.proaliParamters}" "{params.genoaliParamters}" "{params.cactusParamters}" > data/command.sh
+       #./workflow/scripts/ACMGAPipeline.py {params.xml} {params.tree} {params.path} {params.fasta} {params.gff} {params.nonDuplicateCDS} {params.species}  "{params.minimap2ForGff}" "{params.minimap2Paramters}" "{params.proaliParamters}" "{params.genoaliParamters}" "{params.cactusParamters}" > data/command.sh
 
 
 
